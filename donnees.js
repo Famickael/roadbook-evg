@@ -26,6 +26,9 @@
      fiche       identifiant de la fiche pratique du lieu, dans "fenetres"
      prix        montant affiché sur une étiquette noire
      itineraire  adresse ou nom du lieu, envoyé à Waze
+     surprise    étape masquée : { code, titre, texte }. Le titre et le texte
+                 donnés ici s'affichent à la place des vrais tant que le code
+                 n'a pas été saisi (bouton « ··· » de l'étape)
 
    Réglages généraux
      camion      "lecture" : le camion suit le défilement de la page
@@ -34,6 +37,10 @@
      animations  false pour retirer le personnage animé de l'en-tête
      souvenir    true après le week-end : masque le bandeau, la liste à faire,
                  le budget, les infos pratiques, les prix et les réservations
+     options     fonctions facultatives, décrites dans docs/options.md :
+                   messagesVideo    bouton pour laisser un message vidéo à chaque étape
+                   codeAccesPhotos  stockage partagé : code demandé pour voir et déposer
+                   codeSuppression  stockage partagé : code demandé pour supprimer
      fuseau      décalage horaire du lieu du week-end ("+02:00" en été en France)
 
    Toutes les données ci-dessous sont fictives.
@@ -48,6 +55,7 @@ window.ROADBOOK = {
   camion: "auto",
   animations: true,
   souvenir: false,
+  options: { messagesVideo: false, codeAccesPhotos: false, codeSuppression: false },
   lienDepenses: "",
   retrospective: "Toutes les photos du week-end, étape par étape, à garder pour Basile.",
   jours: [
@@ -278,8 +286,8 @@ window.ROADBOOK = {
       onglet: "Dim 14",
       date: "2026-06-14",
       etape: "Étape 3 · 4 personnes",
-      titre: "Dimanche 14 — Vol &amp; clôture",
-      trajet: "Check-out → soufflerie → pique-nique → retours",
+      titre: "Dimanche 14 — Surprise &amp; clôture",
+      trajet: "Check-out → surprise → pique-nique → retours",
       qui: "Corentin · Hugo · Basile · Yann",
       meteo: { lieu: "Bois-Joli", lat: 45.1, lon: 3.95 },
       programme: [
@@ -303,7 +311,8 @@ window.ROADBOOK = {
           reserve: "12h",
           fiche: "soufflerie",
           itineraire: "AéroTube Bois-Joli",
-          prix: "60 €"
+          prix: "60 €",
+          surprise: { code: "surprise", titre: "Visite du vieux bourg de Bois-Joli", texte: "Balade dans les ruelles et café en terrasse avant le pique-nique." }
         },
         { trajet: "🚗 ~5 min" },
         {
@@ -311,7 +320,7 @@ window.ROADBOOK = {
           heure: "13:15",
           duree: "1h",
           titre: "Pique-nique — parc du Belvédère",
-          texte: "À 5 min de la soufflerie. Débrief des vols autour de la glacière avant de reprendre la route. Départ des retours 14:15.",
+          texte: "Débrief de la matinée autour de la glacière avant de reprendre la route. Départ des retours 14:15.",
           fenetres: [
             { id: "piquenique", label: "🍽 Repas" }
           ],
@@ -626,7 +635,7 @@ window.ROADBOOK = {
       echeance: "3 semaines avant",
       fait: true
     },
-    { id: "r6", titre: "Soufflerie AéroTube — 4 pers. dim. (surprise 🤫)", detail: "<a href=\"tel:+33465710190\">04 65 71 01 90</a>", echeance: "à caler cette semaine" },
+    { id: "r6", titre: "Activité surprise du dimanche — 4 pers. 🤫", detail: "créneau de 12h à confirmer", echeance: "à caler cette semaine" },
     { id: "r7", titre: "Babyfoot humain — sam. 12:00", detail: "à confirmer avec le paintball en même temps que le regroupement des équipes" },
     { id: "r8", titre: "T-shirts EVG — 5 exemplaires", detail: "tailles à collecter auprès de chacun", echeance: "10 jours avant" }
   ],
@@ -639,7 +648,7 @@ window.ROADBOOK = {
       { libelle: "💶 Paintball (acompte payé · 500 billes)", montant: "40 €" },
       { libelle: "⏳ Babyfoot humain (à confirmer)", montant: "12 €" },
       { libelle: "⏳ Canyoning (à réserver)", montant: "50 €" },
-      { libelle: "⏳ Soufflerie (à réserver · surprise dim., 2 vols)", montant: "60 €" },
+      { libelle: "⏳ Activité surprise du dimanche (à réserver)", montant: "60 €" },
       { libelle: "⏳ Déjeuner Rochebrune (estimation)", montant: "15-20 €" },
       { libelle: "⏳ Parking des Halles (estimation)", montant: "~10 € / voiture" },
       { libelle: "⏳ Essence + péages (estimation, ~1 280 km)", montant: "~180 € ÷ 3" },
@@ -664,16 +673,14 @@ window.ROADBOOK = {
     { lieu: "Brasserie du Grand Parc", detail: "3 place du Grand Parc, Lénac · <a href=\"tel:+33465710118\">04 65 71 01 18</a>" },
     { lieu: "Le Phare Rouge", detail: "8 quai des Lumières, Lénac · <a href=\"tel:+33465710142\">04 65 71 01 42</a>" },
     { lieu: "Paintball des Trois Chênes", detail: "Lieu-dit Les Trois Chênes, Chanteval · <a href=\"tel:+33639980164\">06 39 98 01 64</a>" },
-    { lieu: "Arvelles Canyoning", detail: "Canyon du Saut du Loup, massif des Arvelles · Fred : <a href=\"tel:+33639980127\">06 39 98 01 27</a>" },
-    { lieu: "Soufflerie AéroTube", detail: "Zone du Belvédère, Bois-Joli · <a href=\"tel:+33465710190\">04 65 71 01 90</a>" }
+    { lieu: "Arvelles Canyoning", detail: "Canyon du Saut du Loup, massif des Arvelles · Fred : <a href=\"tel:+33639980127\">06 39 98 01 27</a>" }
   ],
   telephones: [
     { nom: "Karting Brumeval", numero: "03 53 01 01 75" },
     { nom: "Brasserie Grand Parc", numero: "04 65 71 01 18" },
     { nom: "Le Phare Rouge", numero: "04 65 71 01 42" },
     { nom: "Paintball", numero: "06 39 98 01 64" },
-    { nom: "Canyoning (Fred)", numero: "06 39 98 01 27" },
-    { nom: "Soufflerie", numero: "04 65 71 01 90" }
+    { nom: "Canyoning (Fred)", numero: "06 39 98 01 27" }
   ],
   noteInfos: "Numéros fictifs, pris dans les tranches réservées aux œuvres de fiction.",
   photos: [

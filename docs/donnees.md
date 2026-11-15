@@ -14,6 +14,7 @@ Le fichier décrit un objet unique. Ses rubriques correspondent aux zones de la 
 | `camion` | Le comportement du camion de la frise : `"auto"`, `"horaire"` ou `"lecture"` |
 | `animations` | `false` pour retirer le personnage animé de l'en-tête |
 | `souvenir` | `true` après le week-end, pour masquer ce qui ne sert qu'à l'organisation |
+| `options` | Les fonctions facultatives : messages vidéo, codes du stockage partagé. Voir [Les options](options.md) |
 | `lienDepenses` | L'adresse d'un outil de partage de frais. Vide, le bouton est masqué |
 | `jours` | Les journées, avec leur onglet, leur date, le lieu de la météo et leur programme |
 | `fenetres` | Les fenêtres ouvertes par les boutons : menus, listes de courses, fiches pratiques |
@@ -37,6 +38,7 @@ Une étape du programme s'écrit ainsi :
   alerte: "Chaussures fermées obligatoires",   // facultatif : consigne mise en avant
   reserve: "10h00",                   // facultatif : affiche la pastille « Réservé »
   prix: "55 €",                       // facultatif : montant affiché sur une étiquette
+  surprise: { code: "...", titre: "...", texte: "..." },   // facultatif : étape masquée par un code
   fenetres: [{ id: "collation", label: "🍽 Collation" }],  // facultatif : boutons vers une fenêtre
   fiche: "karting",                   // facultatif : bouton vers la fiche pratique du lieu
   itineraire: "Circuit de Brumeval"   // facultatif : bouton d'itinéraire
@@ -50,6 +52,7 @@ Une étape du programme s'écrit ainsi :
 - Les photos sont rattachées à l'identifiant de leur étape. Une étape peut donc être ajoutée, retirée ou déplacée sans décaler les photos des autres. En revanche, l'identifiant d'une étape ne doit plus changer une fois que des photos y ont été déposées.
 - Les textes acceptent du HTML simple, par exemple `<b>` ou un lien. Ils sont insérés tels quels dans la page : n'y collez que votre propre contenu.
 - Le camion, la météo, le thème et la version souvenir sont détaillés dans [Personnaliser le roadbook](personnaliser.md).
+- Pour vérifier le fichier après une modification, ouvrez la page en ajoutant `?verifier` à la fin de son adresse. Un encadré liste les points à corriger : identifiant en double, heure mal écrite, fiche introuvable.
 - Pour démarrer avec une galerie vide, remplacez la rubrique `photos` par `[]` et supprimez les images du dossier `photos/`.
 - Les couleurs se règlent dans les variables CSS du bloc `:root`, en tête de `index.html`.
 

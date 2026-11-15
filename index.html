@@ -149,6 +149,11 @@ footer{padding:0 18px 34px;font-size:.78rem;color:#6a6e76;text-align:center}
 
 /* ---------- Photos ---------- */
 .pbtn{position:absolute;top:10px;right:10px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--ink);color:#fff;cursor:pointer;line-height:1}
+.mbtn{position:absolute;top:10px;right:58px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--borne);color:#fff;cursor:pointer;line-height:1;font-family:'Barlow',sans-serif;font-weight:700}
+.meta button.secret{background:none;border:none;color:#8a8e96;font-size:1.1rem;font-weight:700;letter-spacing:.1em;padding:.2rem .4rem;cursor:pointer}
+#verif{margin:14px;padding:12px 14px;border-radius:8px;background:#fff;border:2px solid var(--amber);font-size:.9rem}
+#verif.ok{border-color:var(--sign)}
+#verif ul{padding-left:1.2rem;margin-top:.4rem}
 .pstack{display:none;position:absolute;top:48px;right:10px;flex-direction:column;align-items:flex-end;cursor:pointer;z-index:2}
 .pstack img{width:74px;height:74px;object-fit:cover;border-radius:6px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transform:rotate(-4deg)}
 .pstack>*+*{margin-top:-38px}
@@ -255,6 +260,10 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
   el("onglets").innerHTML=jours.map(function(j){return '<button data-t="'+j.id+'">'+j.onglet+'</button>';}).join("");
 
   // Programme
+  // Étapes surprises : tant que le code n'a pas été saisi, l'étape affiche le titre et le texte de couverture
+  var SURP=NS+"surprises",ouvertes={};
+  try{(JSON.parse(localStorage.getItem(SURP)||"[]")||[]).forEach(function(id){ouvertes[id]=true;});}catch(e){}
+  var fichesMasquees={},codes={};
   var html="",premier=true;
   jours.forEach(function(j){
     html+='<section id="'+j.id+'"><div class="day-sign"><div class="etape">'+(j.etape||"")+'</div><h2>'+j.titre+'</h2>'
@@ -262,6 +271,13 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
     (j.programme||[]).forEach(function(s){
       if(s.trajet){html+='<div class="leg">'+s.trajet+'</div>';return;}
       var meta="";
+      if(s.surprise&&s.surprise.code&&orga&&!ouvertes[s.id]){
+        codes[s.id]=s.surprise.code;
+        if(s.fiche){fichesMasquees[s.fiche]=true;}
+        (s.fenetres||[]).forEach(function(f){fichesMasquees[f.id]=true;});
+        s={id:s.id,heure:s.heure,duree:s.duree,type:s.type,titre:s.surprise.titre||"Surprise",texte:s.surprise.texte||""};
+        meta='<button class="secret" data-secret="'+s.id+'" aria-label="Réservé aux organisateurs">···</button>';
+      }
       if(s.reserve&&orga){meta+='<span class="done">✅ Réservé — '+s.reserve+'</span>';}
       (s.fenetres||[]).forEach(function(f){meta+='<button class="food" data-m="f-'+f.id+'">'+f.label+'</button>';});
       if(s.fiche){meta+='<button class="infob" data-m="f-'+s.fiche+'" aria-label="Infos pratiques sur ce lieu">ℹ️</button>';}
@@ -281,6 +297,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
   // Fenêtres : menus, listes et fiches pratiques
   var fen="";
   Object.keys(D.fenetres||{}).forEach(function(id){
+    if(fichesMasquees[id]){return;}
     var f=D.fenetres[id];
     fen+='<div class="overlay" id="f-'+id+'"><div class="modal"><h3>'+f.titre+'</h3>'+(f.intro?'<p>'+f.intro+'</p>':'');
     (f.sections||[]).forEach(function(s){
@@ -325,6 +342,48 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
   }
   if(rapide){el("quick").innerHTML=rapide;}else{el("quick").style.display="none";}
   el("fenetres").innerHTML=fen;
+  document.querySelectorAll("[data-secret]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var id=b.dataset.secret,saisi=window.prompt("Code des organisateurs :");
+      if(saisi===null){return;}
+      if(saisi.trim()!==String(codes[id])){alert("Code incorrect.");return;}
+      ouvertes[id]=true;
+      try{localStorage.setItem(SURP,JSON.stringify(Object.keys(ouvertes)));}catch(e){}
+      location.reload();
+    });
+  });
+
+  // Vérification du fichier de données : toujours dans la console, et à l'écran avec ?verifier dans l'adresse
+  var pb=[],ids={},nbEtapes=0;
+  jours.forEach(function(j,k){
+    if(!j.id){pb.push("Journée n°"+(k+1)+" : il manque « id ».");}
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(j.date||"")){pb.push("Journée « "+(j.id||k+1)+" » : « date » doit s'écrire AAAA-MM-JJ.");}
+    (j.programme||[]).forEach(function(s){
+      if(s.trajet){return;}
+      nbEtapes++;
+      var nom=s.id||s.titre||"sans nom";
+      if(!s.id){pb.push("Étape « "+nom+" » : il manque « id ».");}
+      else if(ids[s.id]){pb.push("Identifiant d'étape en double : « "+s.id+" ».");}
+      else if(!/^[A-Za-z0-9_-]+$/.test(s.id)){pb.push("Étape « "+s.id+" » : l'identifiant ne doit contenir ni espace ni accent.");}
+      ids[s.id]=true;
+      if(!/^\d{1,2}:\d{2}$/.test(s.heure||"")){pb.push("Étape « "+nom+" » : « heure » doit s'écrire HH:MM.");}
+      if(!s.titre){pb.push("Étape « "+nom+" » : il manque « titre ».");}
+      if(s.fiche&&!(D.fenetres||{})[s.fiche]){pb.push("Étape « "+nom+" » : la fiche « "+s.fiche+" » n'existe pas dans « fenetres ».");}
+      (s.fenetres||[]).forEach(function(f){if(!(D.fenetres||{})[f.id]){pb.push("Étape « "+nom+" » : la fenêtre « "+f.id+" » n'existe pas dans « fenetres ».");}});
+      if(s.surprise&&!s.surprise.code){pb.push("Étape « "+nom+" » : « surprise » demande un « code ».");}
+    });
+  });
+  (D.photos||[]).forEach(function(ph){if(!ids[ph.etape]){pb.push("Photo « "+ph.fichier+" » : l'étape « "+ph.etape+" » n'existe pas.");}});
+  var vus={};(D.aFaire||[]).forEach(function(a){if(a.id){if(vus[a.id]){pb.push("Liste à faire : identifiant en double « "+a.id+" ».");}vus[a.id]=true;}});
+  if(!/^[+-]\d{2}:\d{2}$/.test(FUSEAU)){pb.push("« fuseau » doit s'écrire comme \"+02:00\".");}
+  if(["auto","horaire","lecture"].indexOf(D.camion||"auto")<0){pb.push("« camion » doit valoir \"auto\", \"horaire\" ou \"lecture\".");}
+  pb.forEach(function(m){if(window.console){console.warn("[roadbook] "+m);}});
+  if(/[?&]verifier\b/.test(location.search)){
+    var v=document.createElement("div");v.id="verif";
+    if(pb.length){v.innerHTML="<b>"+pb.length+" point(s) à corriger dans donnees.js</b><ul>"+pb.map(function(m){return "<li>"+m.replace(/</g,"&lt;")+"</li>";}).join("")+"</ul>";}
+    else{v.className="ok";v.innerHTML="<b>donnees.js : aucun problème détecté</b> · "+jours.length+" journée(s), "+nbEtapes+" étape(s), "+(D.photos||[]).length+" photo(s) de démonstration.";}
+    document.body.insertBefore(v,document.body.firstChild);
+  }
 })();
 
 // ==========================================================================
@@ -707,7 +766,9 @@ window.addEventListener("resize",fixTops);fixTops();
   function render(){
     stops.forEach(function(st){
       var i=st.dataset.etape;
-      var mine=photos.filter(function(ph){return ph.i===i;});
+      var mine=photos.filter(function(ph){return ph.i===i&&!ph.msg;});
+      var mb=st.querySelector(".mbtn");
+      if(mb){var nm=photos.filter(function(ph){return ph.i===i&&ph.msg;}).length;mb.textContent="🎬"+(nm?" "+nm:"");}
       var stack=st.querySelector(".pstack");
       if(!stack){stack=document.createElement("div");stack.className="pstack";st.appendChild(stack);
         stack.setAttribute("role","button");stack.tabIndex=0;stack.setAttribute("aria-label","Voir les souvenirs de cette étape");
@@ -737,7 +798,7 @@ window.addEventListener("resize",fixTops);fixTops();
           if(!urls[r.id]){urls[r.id]=URL.createObjectURL(r.data);}
           d=urls[r.id];vus[r.id]=true;
         }
-        return {id:"l"+r.id,key:r.id,i:r.etape,d:d,t:r.t,local:true,vid:!!r.vid,ext:r.ext};
+        return {id:"l"+r.id,key:r.id,i:r.etape,d:d,t:r.t,local:true,vid:!!r.vid,ext:r.ext,msg:!!r.msg,auteur:r.auteur||""};
       });
       Object.keys(urls).forEach(function(k){if(!vus[k]){URL.revokeObjectURL(urls[k]);delete urls[k];}});
       merge();render();
@@ -810,7 +871,7 @@ window.addEventListener("resize",fixTops);fixTops();
     r.onerror=function(){cb(null);};
     r.readAsArrayBuffer(file.slice(0,262144));
   }
-  var KO=partage?"Envoi impossible : vérifie la connexion et le code du groupe.":"Enregistrement impossible : le stockage du navigateur est indisponible ou plein (navigation privée ?).";
+  var KO=partage?"Envoi impossible : vérifie la connexion.":"Enregistrement impossible : le stockage du navigateur est indisponible ou plein (navigation privée ?).";
   function busy(on){if(curBtn){curBtn.textContent=on?"⏳":"📸";}}
   function uploadPhoto(f,idx){
     exifDate(f,function(iso){
@@ -824,12 +885,12 @@ window.addEventListener("resize",fixTops);fixTops();
       });
     });
   }
-  function uploadVideo(f,idx){
+  function uploadVideo(f,idx,msg,auteur){
     if(!avecVideos){alert("Les vidéos ne sont pas prises en charge par ce stockage.");return;}
     if(f.size>48*1024*1024){alert("Vidéo trop lourde (max ~48 Mo) : filme plus court ou en 720p.");return;}
     var ext=(f.name.split(".").pop()||"mp4").toLowerCase();
     busy(true);
-    dbAdd({etape:idx,data:f,t:takenAt(f),vid:true,ext:ext})
+    dbAdd({etape:idx,data:f,t:takenAt(f),vid:true,ext:ext,msg:!!msg,auteur:auteur||""})
       .then(loadLocal)
       .catch(function(){alert(KO);})
       .then(function(){busy(false);});
@@ -863,17 +924,54 @@ window.addEventListener("resize",fixTops);fixTops();
     b.addEventListener("click",function(){cur=i;curBtn=b;srcModal.classList.add("open");});
     st.appendChild(b);
   });
+  // Option « messages vidéo » : un bouton par étape pour laisser un message filmé, visionné à cette étape
+  if(D.options&&D.options.messagesVideo&&avecVideos){
+    var AUT=NS+"auteur",msgEtape=null;
+    var inpMCam=document.createElement("input");inpMCam.type="file";inpMCam.accept="video/*";inpMCam.setAttribute("capture","user");inpMCam.style.display="none";
+    var inpMLib=document.createElement("input");inpMLib.type="file";inpMLib.accept="video/*";inpMLib.style.display="none";
+    document.body.appendChild(inpMCam);document.body.appendChild(inpMLib);
+    var msgModal=document.createElement("div");msgModal.className="overlay";msgModal.id="m-msg";
+    msgModal.innerHTML='<div class="modal"><h3>🎬 Message vidéo</h3><p>Il sera visionné à cette étape du programme. Format court conseillé (moins d’une minute).</p><button class="srcbtn" id="msg-cam">🤳 Me filmer</button><button class="srcbtn" id="msg-lib">🖼 Choisir une vidéo</button><button class="srcbtn" id="msg-voir">▶ Voir les messages</button><button class="close">Annuler</button></div>';
+    document.body.appendChild(msgModal);
+    msgModal.addEventListener("click",function(e){if(e.target===msgModal||e.target.classList.contains("close")){msgModal.classList.remove("open");}});
+    var auteur=function(){
+      var a="";try{a=localStorage.getItem(AUT)||"";}catch(e){}
+      if(!a){a=(window.prompt("Ton prénom (affiché avec le message) :")||"").trim();if(a){try{localStorage.setItem(AUT,a);}catch(e){}}}
+      return a;
+    };
+    var envoi=function(inp){
+      var f=inp.files[0];inp.value="";msgModal.classList.remove("open");
+      if(f){curBtn=null;uploadVideo(f,msgEtape,true,auteur());}
+    };
+    inpMCam.addEventListener("change",function(){envoi(inpMCam);});
+    inpMLib.addEventListener("change",function(){envoi(inpMLib);});
+    document.getElementById("msg-cam").addEventListener("click",function(){inpMCam.click();});
+    document.getElementById("msg-lib").addEventListener("click",function(){inpMLib.click();});
+    document.getElementById("msg-voir").addEventListener("click",function(){msgModal.classList.remove("open");openGal([msgEtape],false,true);});
+    stops.forEach(function(st){
+      var b=document.createElement("button");b.className="mbtn";b.textContent="🎬";b.title="Messages vidéo";
+      b.setAttribute("aria-label","Laisser ou voir un message vidéo pour cette étape");
+      b.addEventListener("click",function(){
+        msgEtape=st.dataset.etape;
+        var n=photos.filter(function(ph){return ph.i===msgEtape&&ph.msg;}).length;
+        var voir=document.getElementById("msg-voir");voir.style.display=n?"":"none";voir.textContent="▶ Voir les messages ("+n+")";
+        msgModal.classList.add("open");
+      });
+      st.appendChild(b);
+    });
+  }
   var gal=document.createElement("div");gal.className="overlay";gal.id="m-gal";
   gal.innerHTML='<div class="modal"><div id="gcap"></div><div class="slide-wrap"><img id="gimg" alt=""><video id="gvid" controls playsinline preload="metadata"></video><button class="gnavbtn" id="gprev" aria-label="Précédent">‹</button><button class="gnavbtn" id="gnext" aria-label="Suivant">›</button></div><div class="gbtns"><button id="gdl">⬇ Enregistrer</button><button id="gall">⬇ Tout télécharger</button><button id="gdel">🗑 Supprimer</button></div><div id="gcount"></div><button class="close">Fermer</button></div>';
   document.body.appendChild(gal);
   function pauseVid(){var v=document.getElementById("gvid");if(v){v.pause();}}
   gal.addEventListener("click",function(e){if(e.target===gal||e.target.classList.contains("close")){gal.classList.remove("open");galOpen=false;pauseVid();}});
   var slides=[],gi=0;
+  var galMsg=false;   // true quand la galerie affiche les messages vidéo d'une étape
   function buildSlides(idxs){
     slides=[];
     idxs.forEach(function(i){
-      photos.filter(function(ph){return ph.i===i;}).forEach(function(ph){
-        slides.push({ph:ph,label:(dayOf(parId[i])?dayOf(parId[i])+" · ":"")+stopName(parId[i])});
+      photos.filter(function(ph){return ph.i===i&&!!ph.msg===galMsg;}).forEach(function(ph){
+        slides.push({ph:ph,label:(ph.msg?"Message"+(ph.auteur?" de "+ph.auteur:"")+" · ":(dayOf(parId[i])?dayOf(parId[i])+" · ":""))+stopName(parId[i])});
       });
     });
   }
@@ -940,7 +1038,8 @@ window.addEventListener("resize",fixTops);fixTops();
       if(Math.abs(dx)>50){if(dx<0&&gi<slides.length-1){gi++;}else if(dx>0&&gi>0){gi--;}showSlide();}
     },{passive:true});
   })();
-  function openGal(idxs,keepPos){
+  function openGal(idxs,keepPos,msg){
+    if(!keepPos){galMsg=!!msg;}
     lastIdxs=idxs;galOpen=true;
     document.getElementById("gall").style.display=(idxs.length===stops.length)?"":"none";
     var keep=null;
@@ -989,7 +1088,7 @@ window.addEventListener("resize",fixTops);fixTops();
       var file=liste.map(function(ph,k){return function(){
         var st=parId[ph.i],nom=st?slug(stopName(st)):"etape";
         var ext=ph.vid?(ph.ext||"mp4"):"jpg";
-        var fname=pad(k+1,w)+"_"+horo(ph.t)+"_"+nom+"."+ext;
+        var fname=pad(k+1,w)+"_"+horo(ph.t)+"_"+(ph.msg?"message-"+slug(ph.auteur||"anonyme")+"_":"")+nom+"."+ext;
         return fetch(ph.d).then(function(r){if(!r.ok){throw new Error("hs");}return r.blob();})
           .then(function(b){dossier.file(fname,b,{binary:true});})
           .catch(function(){rates++;})

@@ -33,6 +33,7 @@ L'exemple fourni est un enterrement de vie de garçon de 3 jours, sur le thème 
 | Budget | Coût par poste et participation estimée de chaque personne |
 | Souvenirs | Dépôt de photos et de vidéos sur chaque étape, galerie et téléchargement en un fichier zip |
 | Version souvenir | Un réglage masque l'organisation après le week-end, pour offrir la page comme album |
+| Options | Étape surprise masquée par un code (`surprise` dans la démonstration), messages vidéo des proches, partage des photos entre participants |
 | Bandeau secret | Rappel de ne pas partager la page avec l'invité d'honneur, masqué après le week-end |
 
 ## Démarrer
@@ -57,7 +58,9 @@ Une étape du programme s'écrit ainsi dans `donnees.js` :
 { trajet: "🚗 ~45 min" }
 ```
 
-Toutes les rubriques et tous les champs sont décrits dans [la référence de `donnees.js`](docs/donnees.md).
+Toutes les rubriques et tous les champs sont décrits dans [la référence de `donnees.js`](docs/donnees.md). Pour vérifier le fichier après une modification, ajoutez `?verifier` à la fin de l'adresse de la page.
+
+Le plus rapide reste de confier l'adaptation à un assistant IA : le projet est préparé pour cela, et des demandes prêtes à copier sont proposées dans [Adapter le modèle avec une IA](docs/avec-une-ia.md).
 
 ## Contenu du dépôt
 
@@ -67,12 +70,14 @@ Toutes les rubriques et tous les champs sont décrits dans [la référence de `d
 | `photos/` | Images affichées d'office dans la galerie | Oui, ou à vider |
 | `index.html` | Structure, styles et script de la page | Seulement pour changer l'apparence ou le fonctionnement |
 | `.nojekyll` | Fichier vide qui demande à GitHub Pages de publier les fichiers tels quels | Non |
-| `exemples/` | Exemple de stockage partagé des photos avec Supabase | Seulement pour partager les photos |
+| `exemples/` | Branchement du partage des photos avec Supabase | Seulement pour partager les photos |
+| `AGENTS.md`, `CLAUDE.md` | Guide pour les assistants IA qui modifient le projet | Non |
+| `CHANGELOG.md` | Historique des révisions | À chaque évolution |
 | `docs/` | Documentation et captures d'écran | Non |
 
 ## Photos et vie privée
 
-Les photos et vidéos déposées **restent dans le navigateur de la personne qui les dépose**. Rien n'est envoyé sur un serveur : la page fonctionne sans compte, sans clé et sans hébergement payant. En contrepartie, chaque visiteur ne voit que ses propres dépôts. Pour partager les photos entre participants, un [exemple de stockage partagé](docs/souvenirs.md) est fourni.
+Les photos et vidéos déposées **restent dans le navigateur de la personne qui les dépose**. Rien n'est envoyé sur un serveur : la page fonctionne sans compte, sans clé et sans hébergement payant. En contrepartie, chaque visiteur ne voit que ses propres dépôts. Pour partager les photos entre participants, un [branchement en 4 étapes](docs/souvenirs.md) est fourni.
 
 Avant d'utiliser le modèle pour un vrai week-end, 3 points sont à connaître :
 
@@ -86,7 +91,9 @@ Avant d'utiliser le modèle pour un vrai week-end, 3 points sont à connaître :
 |---|---|
 | [Référence de `donnees.js`](docs/donnees.md) | Les rubriques du fichier, les champs d'une étape, les repères utiles |
 | [Personnaliser le roadbook](docs/personnaliser.md) | Le camion de progression, la météo, le thème et ses dessins, la version souvenir |
-| [Dépôt de photos](docs/souvenirs.md) | Le stockage dans le navigateur, et le partage entre participants avec l'exemple Supabase |
+| [Les options](docs/options.md) | L'étape surprise, les messages vidéo, les codes d'accès et de suppression |
+| [Dépôt de photos](docs/souvenirs.md) | Le stockage dans le navigateur, et le branchement du partage entre participants |
+| [Adapter le modèle avec une IA](docs/avec-une-ia.md) | Ce qui est prévu pour les assistants, et des demandes prêtes à copier |
 | [Précautions d'usage et limites](docs/precautions.md) | Données personnelles, services externes, stockage partagé, limites connues du code |
 | [Étude de cas](docs/etude-de-cas.md) | Le besoin, les publics, les choix de conception, les pistes d'évolution, les 8 écrans |
 
@@ -106,6 +113,8 @@ Les suggestions et les signalements de problèmes sont les bienvenus dans les [i
 
 ## Origine et licence
 
-Cette page a été conçue et écrite avec Claude, l'assistant d'Anthropic. La question de savoir si un contenu produit avec une intelligence artificielle peut être protégé par le droit d'auteur reste discutée. Plutôt que de revendiquer des droits incertains, le choix a été fait de verser l'ensemble au domaine public.
+Cette page a été conçue et écrite avec Claude, l'assistant d'Anthropic : la version d'origine avec Claude Opus 5.5, d'août à novembre 2026, puis la révision qui en a fait un modèle réutilisable avec Claude Fable 5.2, en novembre 2026. Les dates et le contenu de chaque révision sont tenus dans [l'historique des révisions](CHANGELOG.md).
+
+La question de savoir si un contenu produit avec une intelligence artificielle peut être protégé par le droit d'auteur reste discutée. Plutôt que de revendiquer des droits incertains, le choix a été fait de verser l'ensemble au domaine public.
 
 Le contenu de ce dépôt est donc placé sous licence [Creative Commons Zero 1.0](LICENSE). Il peut être copié, modifié et réutilisé librement, sans autorisation ni mention obligatoire.

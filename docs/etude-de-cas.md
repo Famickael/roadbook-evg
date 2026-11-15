@@ -48,11 +48,13 @@ Le deuxième moment est le plus contraignant, et c'est pour lui que la page est 
 
 **Une page qui change de rôle.** Le bandeau « ne pas partager » disparaît de lui-même après le week-end, la météo passe des prévisions au temps qu'il a réellement fait, et le camion suit de nouveau la lecture. Un réglage masque ensuite tout ce qui relevait de l'organisation. Le carnet de route devient alors un album souvenir à offrir.
 
+**Des options plutôt que des fonctions imposées.** L'étape surprise, les messages vidéo des proches et les codes du stockage partagé sont désactivés par défaut. Le modèle reste simple, et chaque groupe n'active que ce qui lui sert.
+
 **Un thème, pour le ton.** Le modèle est sur le thème des pompiers. Un pompier en pixel art se promène dans l'en-tête et vit de petites saynètes : il mange, retrouve un ami, se fait enlever. Un camion de pompier sert de repère dans la frise. Ce clin d'œil à l'invité d'honneur donne le ton d'un week-end entre amis, et il se remplace par un autre thème en redessinant 2 images.
 
 ## Pistes d'évolution
 
-**Un partage des photos plus complet.** Le modèle fournit un exemple de stockage partagé, protégé par un code de groupe. Il reste à y ajouter les vidéos et un rôle d'administrateur pour la modération.
+**Des comptes individuels pour le partage.** Le modèle fournit un branchement de stockage partagé, ouvert par défaut, avec des codes en option. Des comptes par participant permettraient de savoir qui a déposé quoi et de confier la modération à une personne.
 
 **Un fonctionnement sans réseau.** La page a besoin d'une connexion à chaque ouverture, alors qu'une partie d'un trajet se fait souvent en zone mal couverte. Une mise en cache du programme réglerait ce point.
 
