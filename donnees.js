@@ -24,7 +24,17 @@
      reserve     heure de réservation, affichée sur une pastille verte
      fenetres    boutons ouvrant une fenêtre décrite dans "fenetres"
      fiche       identifiant de la fiche pratique du lieu, dans "fenetres"
+     prix        montant affiché sur une étiquette noire
      itineraire  adresse ou nom du lieu, envoyé à Waze
+
+   Réglages généraux
+     camion      "lecture" : le camion suit le défilement de la page
+                 "horaire" : il suit l'heure réelle du programme
+                 "auto"    : horaire pendant le week-end, lecture avant et après
+     animations  false pour retirer le personnage animé de l'en-tête
+     souvenir    true après le week-end : masque le bandeau, la liste à faire,
+                 le budget, les infos pratiques, les prix et les réservations
+     fuseau      décalage horaire du lieu du week-end ("+02:00" en été en France)
 
    Toutes les données ci-dessous sont fictives.
    ========================================================================== */
@@ -35,6 +45,9 @@ window.ROADBOOK = {
   bandeau: "Ne pas partager à Basile avant dimanche soir !",
   finBandeau: "2026-06-15T00:00:00+02:00",
   fuseau: "+02:00",
+  camion: "auto",
+  animations: true,
+  souvenir: false,
   lienDepenses: "",
   retrospective: "Toutes les photos du week-end, étape par étape, à garder pour Basile.",
   jours: [
@@ -97,7 +110,8 @@ window.ROADBOOK = {
           titre: "Karting du circuit de Brumeval",
           texte: "Arrivée 15 min avant l'ouverture. Sessions 10:00-11:30 sur la piste extérieure de 1 050 m, 3 sessions de 10 min + pauses. Départ 11:45.",
           reserve: "10h00",
-          fiche: "karting"
+          fiche: "karting",
+          prix: "55 €"
         },
         { trajet: "🚗 ~45 min" },
         {
@@ -204,14 +218,16 @@ window.ROADBOOK = {
           texte: "Arrivée 30 min avant le créneau de 10:00. Forfait 500 billes chacun, et un autre groupe en face pour servir d'adversaires.",
           reserve: "10h00",
           fiche: "paintball",
-          itineraire: "Paintball des Trois Chênes Chanteval"
+          itineraire: "Paintball des Trois Chênes Chanteval",
+          prix: "40 €"
         },
         {
           id: "babyfoot",
           heure: "12:00",
           duree: "30 min",
           titre: "Babyfoot humain — sur place",
-          texte: "Sur le terrain voisin du paintball : deux équipes accrochées aux barres, Basile dans les buts."
+          texte: "Sur le terrain voisin du paintball : deux équipes accrochées aux barres, Basile dans les buts.",
+          prix: "12 €"
         },
         {
           id: "dejeuner-samedi",
@@ -233,7 +249,8 @@ window.ROADBOOK = {
           texte: "Avec Arvelles Canyoning : sauts, toboggans naturels et rappels. Combinaisons fournies ; prévoir maillot, serviette et baskets qui peuvent aller dans l'eau.",
           reserve: "13h30",
           fiche: "canyon",
-          itineraire: "Canyon du Saut du Loup"
+          itineraire: "Canyon du Saut du Loup",
+          prix: "50 €"
         },
         { trajet: "🚗 ~55 min" },
         {
@@ -285,7 +302,8 @@ window.ROADBOOK = {
           alerte: "Pas de vol en cas d'épaule fragile",
           reserve: "12h",
           fiche: "soufflerie",
-          itineraire: "AéroTube Bois-Joli"
+          itineraire: "AéroTube Bois-Joli",
+          prix: "60 €"
         },
         { trajet: "🚗 ~5 min" },
         {

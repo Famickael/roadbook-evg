@@ -22,7 +22,8 @@ Ce dépôt est un modèle de démonstration. Il est fourni en l'état, sans gara
 ## Stockage partagé
 
 - Une clé d'accès placée dans une page web est visible de tous. Les droits se règlent du côté du service, pour limiter ce que cette clé permet.
-- Sans contrôle d'accès, n'importe quel visiteur peut déposer ou supprimer des fichiers. Un code de groupe ou une modération sont à prévoir.
+- Sans contrôle d'accès, n'importe quel visiteur peut déposer ou supprimer des fichiers. L'exemple fourni protège l'accès par un code de groupe, à transmettre hors de la page.
+- Ce code est une barrière simple. Toute personne qui le connaît peut lire, déposer et supprimer des photos.
 - Le branchement d'un service en ligne rend son auteur responsable des données déposées : droits d'accès, durée de conservation et suppression à la demande.
 - L'export des photos et l'arrêt du service à la fin du week-end sont à prévoir dès le départ.
 
@@ -43,6 +44,7 @@ Ce dépôt est un modèle de démonstration. Il est fourni en l'état, sans gara
 | Les relevés météo ne sont disponibles que quelques jours après la date | Juste après le week-end, les cartes météo peuvent afficher « indisponible » |
 | Le fuseau horaire est un décalage fixe, réglé dans `donnees.js` | Un week-end à cheval sur un changement d'heure aura des dates décalées d'une heure |
 | Les textes de `donnees.js` sont insérés tels quels dans la page | Le fichier ne doit contenir que du contenu de confiance |
+| L'exemple de stockage partagé n'a pas été déployé sur un projet Supabase réel | Un essai est à faire avant de compter dessus pour un week-end |
 | Il n'y a pas de test automatique | Chaque modification se vérifie à la main dans un navigateur |
 
 ---

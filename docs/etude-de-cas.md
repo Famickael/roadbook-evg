@@ -20,7 +20,7 @@ La page sert 3 publics, à 3 moments différents.
 | Pendant | Les participants, sur la route | L'étape suivante, l'heure, l'itinéraire, le numéro à appeler, ce qu'il faut emporter |
 | Après | L'invité d'honneur et ses proches | Les photos du week-end, classées par étape |
 
-Le deuxième moment est le plus contraignant. La page est consultée d'une main, dans une voiture, parfois avec peu de réseau, par des personnes qui n'ont pas suivi la préparation.
+Le deuxième moment est le plus contraignant, et c'est pour lui que la page est conçue. Elle est consultée sur un téléphone, d'une main, dans une voiture ou entre deux activités, parfois avec peu de réseau, par des personnes qui n'ont pas suivi la préparation.
 
 ## Les choix de conception
 
@@ -28,9 +28,11 @@ Le deuxième moment est le plus contraignant. La page est consultée d'une main,
 
 **Le contenu séparé du code.** Tout ce qui change d'un week-end à l'autre est regroupé dans `donnees.js`. Une correction d'horaire se fait à un seul endroit, et une personne qui ne programme pas peut adapter le modèle.
 
-**Le téléphone d'abord.** La mise en page est pensée pour un écran étroit. Les boutons sont larges et la barre des jours reste visible en permanence.
+**Le téléphone d'abord.** La page est optimisée pour un usage sur smartphone pendant le week-end. La mise en page tient sur un écran étroit, les boutons sont larges, et le bandeau comme la barre des jours restent visibles en permanence. L'onglet du jour en cours passe en jaune.
 
-**Une lecture en deux niveaux.** La frise n'affiche que l'essentiel : l'heure, le lieu, la durée et le temps de trajet. Le détail (adresse, consignes, menu, liste de courses) s'ouvre à la demande dans une fenêtre. En conséquence, le programme d'une journée se parcourt en quelques secondes.
+**La page s'ouvre là où en est le groupe.** Pendant le week-end, le camion suit l'heure du programme : il est sur l'étape à l'heure dite, et entre deux étapes pendant le trajet. La page se place d'elle-même sur l'étape en cours.
+
+**Une lecture en deux niveaux.** La frise n'affiche que l'essentiel : l'heure, le lieu, la durée, les participants du jour et le temps de trajet entre deux étapes. Le détail (adresse, consignes, menu, liste de courses) s'ouvre à la demande dans une fenêtre. En conséquence, le programme d'une journée se parcourt en quelques secondes.
 
 **Des actions plutôt que des informations.** Chaque étape propose le geste utile à ce moment-là : lancer l'itinéraire, appeler le prestataire, ouvrir la fiche du lieu. Une pastille verte indique ce qui est déjà réservé.
 
@@ -38,17 +40,19 @@ Le deuxième moment est le plus contraignant. La page est consultée d'une main,
 
 **Un budget transparent.** Le coût est détaillé par poste, puis par personne selon les jours de présence. La règle de répartition de la part de l'invité est écrite en toutes lettres, ce qui évite les discussions au moment des comptes.
 
-**Des souvenirs rattachés aux étapes.** Chaque photo se dépose sur l'étape où elle a été prise. L'album se constitue donc tout seul, dans l'ordre du week-end.
+**Des souvenirs rattachés aux étapes.** Chaque photo se dépose sur l'étape où elle a été prise, depuis l'appareil photo ou la galerie du téléphone. L'album se constitue donc tout seul, dans l'ordre du week-end. Le classement utilise la date de prise de vue et non la date de dépôt, pour que les photos envoyées après coup retrouvent leur place. L'enregistrement d'une photo passe par le partage du téléphone quand il est disponible.
 
 **Aucune donnée envoyée.** Les souvenirs restent dans le navigateur de chacun. Le modèle peut ainsi être essayé et publié sans compte, sans coût et sans risque de dépôt indésirable.
 
-**Une page qui change de rôle.** Le bandeau « ne pas partager » disparaît de lui-même après le week-end, et la météo passe des prévisions aux relevés réels. Le carnet de route devient alors un album souvenir.
+**Une météo qui se lit d'un coup d'œil.** Un pictogramme, 2 températures, la pluie et le vent. Tant que les prévisions ne sont pas disponibles, un soleil animé signale l'emplacement.
 
-**Un peu d'humour.** Le personnage animé de l'en-tête et le camion qui suit la lecture donnent le ton d'un week-end entre amis. Le camion sert aussi de repère de position dans la frise.
+**Une page qui change de rôle.** Le bandeau « ne pas partager » disparaît de lui-même après le week-end, la météo passe des prévisions au temps qu'il a réellement fait, et le camion suit de nouveau la lecture. Un réglage masque ensuite tout ce qui relevait de l'organisation. Le carnet de route devient alors un album souvenir à offrir.
+
+**Un thème, pour le ton.** Le modèle est sur le thème des pompiers. Un pompier en pixel art se promène dans l'en-tête et vit de petites saynètes : il mange, retrouve un ami, se fait enlever. Un camion de pompier sert de repère dans la frise. Ce clin d'œil à l'invité d'honneur donne le ton d'un week-end entre amis, et il se remplace par un autre thème en redessinant 2 images.
 
 ## Pistes d'évolution
 
-**Un partage des photos entre participants.** C'est la suite logique du modèle. Elle suppose un service de stockage, un code d'accès pour le groupe et une règle claire sur qui peut supprimer quoi.
+**Un partage des photos plus complet.** Le modèle fournit un exemple de stockage partagé, protégé par un code de groupe. Il reste à y ajouter les vidéos et un rôle d'administrateur pour la modération.
 
 **Un fonctionnement sans réseau.** La page a besoin d'une connexion à chaque ouverture, alors qu'une partie d'un trajet se fait souvent en zone mal couverte. Une mise en cache du programme réglerait ce point.
 

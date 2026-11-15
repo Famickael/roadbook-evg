@@ -2,6 +2,8 @@
 
 Un modèle de page web pour organiser un week-end à plusieurs : programme étape par étape, météo, liste des choses à faire, budget par personne, infos pratiques et dépôt de photos souvenirs.
 
+La page est **optimisée pour le smartphone** : elle est faite pour être consultée pendant le week-end, sur la route et entre deux activités.
+
 **Tout le contenu se règle dans un seul fichier, `donnees.js`**, sans toucher au code. Il n'y a rien à installer, et la page s'héberge gratuitement.
 
 **[Voir la démonstration en ligne](https://famickael.github.io/roadbook-evg/)**
@@ -17,19 +19,20 @@ Un modèle de page web pour organiser un week-end à plusieurs : programme étap
   </tr>
 </table>
 
-L'exemple fourni est un enterrement de vie de garçon de 3 jours. **Toutes les données sont fictives** : prénoms, communes, adresses, prestataires, téléphones et montants ont été inventés, et les images sont des illustrations générées.
+L'exemple fourni est un enterrement de vie de garçon de 3 jours, sur le thème des pompiers : un pompier en pixel art anime l'en-tête et un camion de pompier suit la progression du programme. **Toutes les données sont fictives** : prénoms, communes, adresses, prestataires, téléphones et montants ont été inventés, et les images sont des illustrations générées.
 
 ## Fonctions
 
 | Fonction | Description |
 |---|---|
 | Programme | Une frise par jour, avec l'heure, la durée, le temps de trajet et un bouton d'itinéraire pour chaque étape |
-| Navigation | Barre des jours toujours visible, et un camion qui suit la lecture le long de la frise |
+| Navigation | Barre des jours toujours visible, et un camion qui suit l'heure du programme pendant le week-end |
 | Météo | Prévisions avant le week-end, puis relevés réels une fois la date passée |
 | Fiches pratiques | Une fenêtre par lieu et par repas : adresse, horaires, téléphone, menu, liste de courses |
 | À faire | Liste des réservations à cocher, classées par urgence |
 | Budget | Coût par poste et participation estimée de chaque personne |
 | Souvenirs | Dépôt de photos et de vidéos sur chaque étape, galerie et téléchargement en un fichier zip |
+| Version souvenir | Un réglage masque l'organisation après le week-end, pour offrir la page comme album |
 | Bandeau secret | Rappel de ne pas partager la page avec l'invité d'honneur, masqué après le week-end |
 
 ## Démarrer
@@ -64,11 +67,12 @@ Toutes les rubriques et tous les champs sont décrits dans [la référence de `d
 | `photos/` | Images affichées d'office dans la galerie | Oui, ou à vider |
 | `index.html` | Structure, styles et script de la page | Seulement pour changer l'apparence ou le fonctionnement |
 | `.nojekyll` | Fichier vide qui demande à GitHub Pages de publier les fichiers tels quels | Non |
+| `exemples/` | Exemple de stockage partagé des photos avec Supabase | Seulement pour partager les photos |
 | `docs/` | Documentation et captures d'écran | Non |
 
 ## Photos et vie privée
 
-Les photos et vidéos déposées **restent dans le navigateur de la personne qui les dépose**. Rien n'est envoyé sur un serveur : la page fonctionne sans compte, sans clé et sans hébergement payant. En contrepartie, chaque visiteur ne voit que ses propres dépôts.
+Les photos et vidéos déposées **restent dans le navigateur de la personne qui les dépose**. Rien n'est envoyé sur un serveur : la page fonctionne sans compte, sans clé et sans hébergement payant. En contrepartie, chaque visiteur ne voit que ses propres dépôts. Pour partager les photos entre participants, un [exemple de stockage partagé](docs/souvenirs.md) est fourni.
 
 Avant d'utiliser le modèle pour un vrai week-end, 3 points sont à connaître :
 
@@ -81,7 +85,8 @@ Avant d'utiliser le modèle pour un vrai week-end, 3 points sont à connaître :
 | Page | Contenu |
 |---|---|
 | [Référence de `donnees.js`](docs/donnees.md) | Les rubriques du fichier, les champs d'une étape, les repères utiles |
-| [Dépôt de photos](docs/souvenirs.md) | Le fonctionnement du stockage dans le navigateur, et comment brancher un partage entre participants |
+| [Personnaliser le roadbook](docs/personnaliser.md) | Le camion de progression, la météo, le thème et ses dessins, la version souvenir |
+| [Dépôt de photos](docs/souvenirs.md) | Le stockage dans le navigateur, et le partage entre participants avec l'exemple Supabase |
 | [Précautions d'usage et limites](docs/precautions.md) | Données personnelles, services externes, stockage partagé, limites connues du code |
 | [Étude de cas](docs/etude-de-cas.md) | Le besoin, les publics, les choix de conception, les pistes d'évolution, les 8 écrans |
 

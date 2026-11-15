@@ -217,6 +217,9 @@ footer{padding:0 18px 34px;font-size:.78rem;color:#6a6e76;text-align:center}
 <div id="fenetres"></div>
 
 <script src="donnees.js"></script>
+<!-- Stockage partagé des photos (facultatif) : voir docs/souvenirs.md
+<script src="exemples/stockage-supabase.js"></script>
+-->
 <script>
 // ==========================================================================
 // 1. RENDU : construit la page à partir de window.ROADBOOK (fichier donnees.js)
@@ -233,7 +236,9 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
   document.title=(D.titre||"Roadbook")+" — roadbook";
 
   // Bandeau, en-tête
-  if(D.bandeau){el("orga").innerHTML='<span class="dot">!</span>'+D.bandeau;}else{el("orga").style.display="none";}
+  // Mode souvenir : après le week-end, masque ce qui ne sert qu'à l'organisation
+  var orga=!D.souvenir;
+  if(D.bandeau&&orga){el("orga").innerHTML='<span class="dot">!</span>'+D.bandeau;}else{el("orga").style.display="none";}
   el("hd-surtitre").innerHTML=D.surtitre||"";
   el("hd-titre").innerHTML=D.titre||"";
   el("hd-accroche").innerHTML=D.accroche||"";
@@ -257,7 +262,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
     (j.programme||[]).forEach(function(s){
       if(s.trajet){html+='<div class="leg">'+s.trajet+'</div>';return;}
       var meta="";
-      if(s.reserve){meta+='<span class="done">✅ Réservé — '+s.reserve+'</span>';}
+      if(s.reserve&&orga){meta+='<span class="done">✅ Réservé — '+s.reserve+'</span>';}
       (s.fenetres||[]).forEach(function(f){meta+='<button class="food" data-m="f-'+f.id+'">'+f.label+'</button>';});
       if(s.fiche){meta+='<button class="infob" data-m="f-'+s.fiche+'" aria-label="Infos pratiques sur ce lieu">ℹ️</button>';}
       if(s.itineraire){meta+='<a class="waze" href="https://waze.com/ul?q='+encodeURIComponent(s.itineraire)+'&navigate=yes">🧭 Waze</a>';}
@@ -265,7 +270,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
         +'<span class="time">'+s.heure+'</span>'+(s.duree?'<span class="dur">⏱ '+s.duree+'</span>':'')
         +'<h3>'+s.titre+'</h3>'+(premier?'<span class="fireman-pin" id="fireman-pin" title="On en est là"></span>':'')
         +(s.texte?'<p>'+s.texte+'</p>':'')
-        +(s.alerte?'<div class="tagrow"><span class="tag warn">'+s.alerte+'</span></div>':'')
+        +((s.alerte||(s.prix&&orga))?'<div class="tagrow">'+(s.alerte?'<span class="tag warn">'+s.alerte+'</span>':'')+(s.prix&&orga?'<span class="tag euro">'+s.prix+'</span>':'')+'</div>':'')
         +(meta?'<div class="meta">'+meta+'</div>':'')+'</div>';
       premier=false;
     });
@@ -286,7 +291,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
 
   // Accès rapide : liste à faire, budget, infos pratiques
   var rapide="";
-  if((D.aFaire||[]).length){
+  if(orga&&(D.aFaire||[]).length){
     rapide+='<button class="qbtn" data-m="m-resas">✅ À faire</button>';
     fen+='<div class="overlay" id="m-resas"><div class="modal"><div class="resas" id="resas"><h2>À faire — par ordre d\'urgence</h2>'
       +D.aFaire.map(function(a,n){
@@ -296,7 +301,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
       }).join("")
       +'</div><p class="note">Les cases cochées sont mémorisées dans ce navigateur.</p><button class="close">Fermer</button></div></div>';
   }
-  if(D.budget){
+  if(orga&&D.budget){
     var b=D.budget;
     rapide+='<button class="qbtn" data-m="m-budget">💶 Budget</button>';
     fen+='<div class="overlay" id="m-budget"><div class="modal"><div class="budget"><h2>Budget / pers.</h2>'
@@ -306,7 +311,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
       +(b.notes||[]).map(function(n){return '<p class="petit">'+n+'</p>';}).join("")
       +'</div><button class="close">Fermer</button></div></div>';
   }
-  if((D.infos||[]).length||(D.telephones||[]).length){
+  if(orga&&((D.infos||[]).length||(D.telephones||[]).length)){
     rapide+='<button class="qbtn" data-m="m-infos">ℹ️ Infos pratiques</button>';
     fen+='<div class="overlay" id="m-infos"><div class="modal"><h3>ℹ️ Infos pratiques</h3>'
       +(D.infos||[]).map(function(i){return '<h4>'+i.lieu+'</h4><ul><li>'+i.detail+'</li></ul>';}).join("")
@@ -315,7 +320,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
       +(D.noteInfos?'<p class="note">'+D.noteInfos+'</p>':'')
       +'<button class="close">Fermer</button></div></div>';
   }
-  if(D.lienDepenses){
+  if(orga&&D.lienDepenses){
     rapide+='<a class="qbtn lien" href="'+D.lienDepenses+'" target="_blank" rel="noopener">💶 Dépenses partagées</a>';
   }
   if(rapide){el("quick").innerHTML=rapide;}else{el("quick").style.display="none";}
@@ -437,6 +442,7 @@ window.addEventListener("resize",fixTops);fixTops();
   function W(){return stage.clientWidth;}
 
   var hero=actor(HERO,PAL,2.6,-50);
+  if(D.animations===false){hero.style.display="none";}
 
   function startLegs(a){stopLegs(a);a._f=1;a._t=setInterval(function(){a._f=(a._f===1)?2:1;drawFrame(a._c,a._f);},150);}
   function stopLegs(a){if(a._t){clearInterval(a._t);a._t=null;}drawFrame(a._c,0);}
@@ -509,7 +515,8 @@ window.addEventListener("resize",fixTops);fixTops();
       .then(loop)
       .catch(function(){setTimeout(loop,2000);});
   }
-  if(!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)){loop();}
+  // La saynète ne tourne pas si D.animations vaut false, ni si le visiteur a demandé moins d'animations à son système
+  if(D.animations!==false&&!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)){loop();}
 
   // Camion pixel sur la timeline
   var pin=document.getElementById("fireman-pin");
@@ -517,23 +524,61 @@ window.addEventListener("resize",fixTops);fixTops();
   window._truckCanvas=function(sc){return makeCanvas(TRUCK,PAL,sc);};
 })();
 
-// Camion pixel : suit le lecteur le long de la timeline
+// Camion de progression le long de la frise. Trois modes, réglés par D.camion dans donnees.js :
+//   "lecture" : le camion suit le défilement de la page
+//   "horaire" : le camion suit l'heure réelle (sur l'étape à l'heure dite, entre deux étapes pendant le trajet)
+//   "auto"    : horaire pendant le week-end, lecture avant et après (valeur par défaut)
 (function(){
+  var mode=D.camion||"auto";
+  // Date et heure de chaque étape, dans l'ordre de la page. Dans une même journée, une heure plus petite
+  // que la précédente (01:30 après 22:15) est comptée le lendemain.
+  var temps=[];
+  (D.jours||[]).forEach(function(j){
+    var base=new Date(j.date+"T00:00:00"+FUSEAU).getTime(),prec=-1,plus=0;
+    (j.programme||[]).forEach(function(s){
+      if(s.trajet){return;}
+      var hm=String(s.heure||"00:00").split(":"),min=(+hm[0])*60+(+hm[1]||0);
+      if(min<prec){plus+=1440;}
+      prec=min;temps.push(base+(min+plus)*60000);
+    });
+  });
+  var valide=temps.length>0&&temps.every(function(t){return !isNaN(t);});
+  function horaireActif(){
+    if(mode==="lecture"||!valide){return false;}
+    if(mode==="horaire"){return true;}
+    var now=Date.now();
+    return now>=temps[0]&&now<=temps[temps.length-1]+3*3600000;
+  }
+  // Rang de l'étape en cours et avancement vers la suivante (0 à 1), d'après l'heure
+  function positionHoraire(n){
+    var now=Date.now(),k=0,f=0;
+    if(now>=temps[n-1]){k=n-1;}
+    else if(now>temps[0]){
+      for(var q=0;q<n-1;q++){if(now>=temps[q]&&now<temps[q+1]){k=q;f=(now-temps[q])/(temps[q+1]-temps[q]);break;}}
+    }
+    return {k:k,f:f};
+  }
   function updateTruck(){
     var pin=document.getElementById("fireman-pin");
     var stops=[].slice.call(document.querySelectorAll(".stop"));
     if(!pin||!stops.length){return;}
     if(pin.parentNode!==document.body){pin.style.position="absolute";document.body.appendChild(pin);}
-    var marker=window.scrollY+window.innerHeight*0.38;
     var pts=stops.map(function(st){var r=st.getBoundingClientRect();return {top:r.top+window.scrollY+10,left:r.left+window.scrollX-54};});
     var top=pts[0].top,left=pts[0].left,last=pts[pts.length-1];
-    if(marker>=last.top){top=last.top;left=last.left;}
-    else if(marker>pts[0].top){
-      for(var k=0;k<pts.length-1;k++){
-        if(marker>=pts[k].top&&marker<pts[k+1].top){
-          var f=(marker-pts[k].top)/(pts[k+1].top-pts[k].top);
-          top=pts[k].top+(pts[k+1].top-pts[k].top)*f;
-          left=pts[k].left;break;
+    if(horaireActif()){
+      var n=Math.min(temps.length,pts.length),ph=positionHoraire(n);
+      var a=pts[ph.k],b=pts[Math.min(ph.k+1,n-1)];
+      top=a.top+(b.top-a.top)*ph.f;left=a.left;
+    }else{
+      var marker=window.scrollY+window.innerHeight*0.38;
+      if(marker>=last.top){top=last.top;left=last.left;}
+      else if(marker>pts[0].top){
+        for(var k=0;k<pts.length-1;k++){
+          if(marker>=pts[k].top&&marker<pts[k+1].top){
+            var f=(marker-pts[k].top)/(pts[k+1].top-pts[k].top);
+            top=pts[k].top+(pts[k+1].top-pts[k].top)*f;
+            left=pts[k].left;break;
+          }
         }
       }
     }
@@ -544,6 +589,18 @@ window.addEventListener("resize",fixTops);fixTops();
   window.addEventListener("resize",updateTruck);
   window.addEventListener("load",updateTruck);
   setTimeout(updateTruck,300);
+  setInterval(updateTruck,60000);
+  window._majCamion=updateTruck;   // rappelé quand l'affichage des photos modifie la hauteur des étapes
+  // Recalage quand la hauteur de la page change (police chargée, photos affichées, fenêtre redimensionnée)
+  if(window.ResizeObserver){new ResizeObserver(function(){updateTruck();}).observe(document.body);}
+  // Pendant le week-end, la page s'ouvre directement sur l'étape en cours
+  var enCours=valide&&Date.now()>temps[0]&&Date.now()<temps[temps.length-1];
+  if(mode!=="lecture"&&enCours){
+    setTimeout(function(){
+      var stops=document.querySelectorAll(".stop"),ph=positionHoraire(Math.min(temps.length,stops.length));
+      if(stops[ph.k]&&ph.k>0){stops[ph.k].scrollIntoView({block:"center"});}
+    },400);
+  }
 })();
 
 // ==========================================================================
@@ -631,9 +688,13 @@ window.addEventListener("resize",fixTops);fixTops();
       });
     });
   }
-  function dbAll(){return req("readonly",function(s){return s.getAll();});}
-  function dbAdd(rec){return req("readwrite",function(s){return s.add(rec);});}
-  function dbDel(id){return req("readwrite",function(s){return s.delete(id);});}
+  // Stockage partagé facultatif : si un adaptateur est chargé avant ce script (window.ROADBOOK_STOCKAGE),
+  // il remplace le stockage du navigateur. Voir docs/souvenirs.md et exemples/stockage-supabase.js.
+  var ext=window.ROADBOOK_STOCKAGE||null,partage=!!ext;
+  var avecVideos=!ext||ext.videos!==false;
+  function dbAll(){return ext?ext.lister():req("readonly",function(s){return s.getAll();});}
+  function dbAdd(rec){return ext?ext.ajouter(rec):req("readwrite",function(s){return s.add(rec);});}
+  function dbDel(id){return ext?ext.supprimer(id):req("readwrite",function(s){return s.delete(id);});}
   try{(JSON.parse(localStorage.getItem(HIDE_KEY)||"[]")||[]).forEach(function(id){hidden[id]=true;});}catch(e){}
   function saveHidden(){try{localStorage.setItem(HIDE_KEY,JSON.stringify(Object.keys(hidden)));}catch(e){}}
 
@@ -663,6 +724,7 @@ window.addEventListener("resize",fixTops);fixTops();
       if(mine.length>3){var m=document.createElement("span");m.className="pmore";m.textContent="+"+(mine.length-3);stack.appendChild(m);}
       stack.style.display=mine.length?"flex":"none";
     });
+    if(window._majCamion){window._majCamion();}
   }
   demo=(D.photos||[]).map(function(e){return {id:"d"+e.id,i:e.etape,d:e.fichier,t:e.date};});
   merge();render();
@@ -671,7 +733,7 @@ window.addEventListener("resize",fixTops);fixTops();
       var vus={};
       locaux=rows.map(function(r){
         var d=r.data;
-        if(r.vid){
+        if(r.vid&&typeof r.data!=="string"){   // vidéo locale : fichier enregistré dans le navigateur
           if(!urls[r.id]){urls[r.id]=URL.createObjectURL(r.data);}
           d=urls[r.id];vus[r.id]=true;
         }
@@ -748,7 +810,7 @@ window.addEventListener("resize",fixTops);fixTops();
     r.onerror=function(){cb(null);};
     r.readAsArrayBuffer(file.slice(0,262144));
   }
-  var KO="Enregistrement impossible : le stockage du navigateur est indisponible ou plein (navigation privée ?).";
+  var KO=partage?"Envoi impossible : vérifie la connexion et le code du groupe.":"Enregistrement impossible : le stockage du navigateur est indisponible ou plein (navigation privée ?).";
   function busy(on){if(curBtn){curBtn.textContent=on?"⏳":"📸";}}
   function uploadPhoto(f,idx){
     exifDate(f,function(iso){
@@ -763,6 +825,7 @@ window.addEventListener("resize",fixTops);fixTops();
     });
   }
   function uploadVideo(f,idx){
+    if(!avecVideos){alert("Les vidéos ne sont pas prises en charge par ce stockage.");return;}
     if(f.size>48*1024*1024){alert("Vidéo trop lourde (max ~48 Mo) : filme plus court ou en 720p.");return;}
     var ext=(f.name.split(".").pop()||"mp4").toLowerCase();
     busy(true);
@@ -783,7 +846,7 @@ window.addEventListener("resize",fixTops);fixTops();
     inp.value="";
   }
   var srcModal=document.createElement("div");srcModal.className="overlay";srcModal.id="m-photosrc";
-  srcModal.innerHTML='<div class="modal"><h3>📸 Ajouter un souvenir</h3><button class="srcbtn" id="src-cam">📷 Prendre une photo</button><button class="srcbtn" id="src-vid">🎥 Filmer une vidéo</button><button class="srcbtn" id="src-lib">🖼 Choisir dans la galerie</button><p class="note">Version de démonstration : le souvenir reste dans ce navigateur, il n’est envoyé nulle part.</p><button class="close">Annuler</button></div>';
+  srcModal.innerHTML='<div class="modal"><h3>📸 Ajouter un souvenir</h3><button class="srcbtn" id="src-cam">📷 Prendre une photo</button><button class="srcbtn" id="src-vid">🎥 Filmer une vidéo</button><button class="srcbtn" id="src-lib">🖼 Choisir dans la galerie</button><p class="note">'+(partage?"Le souvenir est partagé avec tout le groupe.":"Le souvenir reste dans ce navigateur, il n’est envoyé nulle part.")+'</p><button class="close">Annuler</button></div>';
   document.body.appendChild(srcModal);
   inpCam.addEventListener("change",function(){onFiles(inpCam);srcModal.classList.remove("open");});
   inpVid.addEventListener("change",function(){onFiles(inpVid);srcModal.classList.remove("open");});
@@ -791,6 +854,7 @@ window.addEventListener("resize",fixTops);fixTops();
   srcModal.addEventListener("click",function(e){if(e.target===srcModal||e.target.classList.contains("close")){srcModal.classList.remove("open");}});
   document.getElementById("src-cam").addEventListener("click",function(){inpCam.click();});
   document.getElementById("src-vid").addEventListener("click",function(){inpVid.click();});
+  if(!avecVideos){document.getElementById("src-vid").style.display="none";inpLib.accept="image/*";}
   document.getElementById("src-lib").addEventListener("click",function(){inpLib.click();});
   stops.forEach(function(st){
     var i=st.dataset.etape;
@@ -859,7 +923,8 @@ window.addEventListener("resize",fixTops);fixTops();
     if(!slides.length){return;}
     var ph=slides[gi].ph;
     if(ph.local){
-      if(!confirm(ph.vid?"Supprimer cette vidéo de ce navigateur ?":"Supprimer cette photo de ce navigateur ?")){return;}
+      var ou=partage?"pour tout le groupe":"de ce navigateur";
+      if(!confirm(ph.vid?"Supprimer cette vidéo "+ou+" ?":"Supprimer cette photo "+ou+" ?")){return;}
       dbDel(ph.key).then(loadLocal).catch(function(){alert("Suppression impossible.");});
     }else{
       if(!confirm("Masquer cette image de démonstration dans ce navigateur ?")){return;}
@@ -946,6 +1011,8 @@ window.addEventListener("resize",fixTops);fixTops();
     .then(function(){dlBusy=false;dlBtn.disabled=false;dlBtn.textContent=dlLabel;});
   });
   loadLocal();
+  // Stockage partagé : la galerie se rafraîchit seule pour afficher les dépôts des autres
+  if(partage){setInterval(loadLocal,(ext.rafraichir||60)*1000);}
 })();
 
 // Accessibilité : rôle de dialogue pour toutes les fenêtres, y compris celles créées par le script

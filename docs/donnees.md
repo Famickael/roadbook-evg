@@ -11,6 +11,9 @@ Le fichier décrit un objet unique. Ses rubriques correspondent aux zones de la 
 | `titre`, `surtitre`, `accroche` | L'en-tête bleu |
 | `bandeau`, `finBandeau` | Le texte du bandeau rouge et la date à partir de laquelle il disparaît |
 | `fuseau` | Le décalage horaire du lieu du week-end, par exemple `"+02:00"` en été en France |
+| `camion` | Le comportement du camion de la frise : `"auto"`, `"horaire"` ou `"lecture"` |
+| `animations` | `false` pour retirer le personnage animé de l'en-tête |
+| `souvenir` | `true` après le week-end, pour masquer ce qui ne sert qu'à l'organisation |
 | `lienDepenses` | L'adresse d'un outil de partage de frais. Vide, le bouton est masqué |
 | `jours` | Les journées, avec leur onglet, leur date, le lieu de la météo et leur programme |
 | `fenetres` | Les fenêtres ouvertes par les boutons : menus, listes de courses, fiches pratiques |
@@ -33,6 +36,7 @@ Une étape du programme s'écrit ainsi :
   texte: "Arrivée 15 min avant l'ouverture.",
   alerte: "Chaussures fermées obligatoires",   // facultatif : consigne mise en avant
   reserve: "10h00",                   // facultatif : affiche la pastille « Réservé »
+  prix: "55 €",                       // facultatif : montant affiché sur une étiquette
   fenetres: [{ id: "collation", label: "🍽 Collation" }],  // facultatif : boutons vers une fenêtre
   fiche: "karting",                   // facultatif : bouton vers la fiche pratique du lieu
   itineraire: "Circuit de Brumeval"   // facultatif : bouton d'itinéraire
@@ -45,7 +49,7 @@ Une étape du programme s'écrit ainsi :
 - Les identifiants cités dans `fenetres` et `fiche` renvoient aux entrées de la rubrique `fenetres` du fichier.
 - Les photos sont rattachées à l'identifiant de leur étape. Une étape peut donc être ajoutée, retirée ou déplacée sans décaler les photos des autres. En revanche, l'identifiant d'une étape ne doit plus changer une fois que des photos y ont été déposées.
 - Les textes acceptent du HTML simple, par exemple `<b>` ou un lien. Ils sont insérés tels quels dans la page : n'y collez que votre propre contenu.
-- La météo vient de l'API ouverte [Open-Meteo](https://open-meteo.com/), sans clé. Il suffit d'indiquer la latitude et la longitude du lieu de chaque journée.
+- Le camion, la météo, le thème et la version souvenir sont détaillés dans [Personnaliser le roadbook](personnaliser.md).
 - Pour démarrer avec une galerie vide, remplacez la rubrique `photos` par `[]` et supprimez les images du dossier `photos/`.
 - Les couleurs se règlent dans les variables CSS du bloc `:root`, en tête de `index.html`.
 
