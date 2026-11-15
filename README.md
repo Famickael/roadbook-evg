@@ -37,7 +37,7 @@ L'exemple fourni est un enterrement de vie de garçon de 3 jours. **Toutes les d
 1. **Copiez le dépôt** avec le bouton « Use this template » ou « Fork », ou téléchargez le zip.
 2. **Ouvrez `donnees.js`** dans un éditeur de texte et remplacez le contenu fictif par le vôtre.
 3. **Vérifiez le résultat** en ouvrant `index.html` dans un navigateur. Un double-clic suffit.
-4. **Publiez** : dans les réglages du dépôt, rubrique « Pages », choisissez « GitHub Actions » comme source. Le site est ensuite mis en ligne à chaque modification de la branche `main`.
+4. **Publiez** : dans les réglages du dépôt, rubrique « Pages », choisissez « Deploy from a branch », puis la branche `main` et le dossier `/ (root)`. Le site est ensuite mis en ligne à chaque modification.
 
 Une étape du programme s'écrit ainsi dans `donnees.js` :
 
@@ -63,7 +63,7 @@ Toutes les rubriques et tous les champs sont décrits dans [la référence de `d
 | `donnees.js` | Tout le contenu : titres, jours, étapes, fenêtres, liste à faire, budget, infos, photos de démonstration | Oui |
 | `photos/` | Images affichées d'office dans la galerie | Oui, ou à vider |
 | `index.html` | Structure, styles et script de la page | Seulement pour changer l'apparence ou le fonctionnement |
-| `.github/workflows/pages.yml` | Mise en ligne automatique avec GitHub Pages | Non |
+| `.nojekyll` | Fichier vide qui demande à GitHub Pages de publier les fichiers tels quels | Non |
 | `docs/` | Documentation et captures d'écran | Non |
 
 ## Photos et vie privée
