@@ -24,6 +24,7 @@ Ce dépôt est un modèle de démonstration. Il est fourni en l'état, sans gara
 - Une clé d'accès placée dans une page web est visible de tous. Les droits se règlent du côté du service, pour limiter ce que cette clé permet.
 - Le branchement fourni est ouvert par défaut : toute personne qui a l'adresse de la page peut voir, déposer et supprimer des souvenirs. Un code d'accès et un code de suppression sont proposés en option.
 - Ces codes sont une barrière simple, partagée par tout un groupe. Ils ne remplacent pas des comptes individuels.
+- Les vidéos sont désactivées par défaut. Une fois activées, leur espace de fichiers accepte les dépôts de toute personne qui a l'adresse de la page, même si un code d'accès est réglé.
 - Le branchement d'un service en ligne rend son auteur responsable des données déposées : droits d'accès, durée de conservation et suppression à la demande.
 - L'export des photos et l'arrêt du service à la fin du week-end sont à prévoir dès le départ.
 
@@ -40,7 +41,7 @@ Ce dépôt est un modèle de démonstration. Il est fourni en l'état, sans gara
 | La bibliothèque JSZip est chargée depuis un service externe sans contrôle d'intégrité | Le téléchargement en zip dépend de la disponibilité et de la fiabilité de ce service |
 | Les photos sont enregistrées sous forme de texte, les vidéos sans plafond global | Le quota de stockage du navigateur peut être atteint, et le dépôt échoue alors avec un message |
 | Les photos au format HEIC ne sont lues que par certains navigateurs | Le dépôt peut échouer selon le téléphone et le navigateur |
-| Les fenêtres ne retiennent pas le focus du clavier | La navigation au clavier ou avec un lecteur d'écran reste imparfaite |
+| Le focus entre dans une fenêtre à son ouverture et revient ensuite sur le bouton, mais il n'y est pas retenu | La touche Tab peut sortir de la fenêtre, et la navigation au clavier reste imparfaite |
 | Les relevés météo ne sont disponibles que quelques jours après la date | Juste après le week-end, les cartes météo peuvent afficher « indisponible » |
 | Le fuseau horaire est un décalage fixe, réglé dans `donnees.js` | Un week-end à cheval sur un changement d'heure aura des dates décalées d'une heure |
 | Les textes de `donnees.js` sont insérés tels quels dans la page | Le fichier ne doit contenir que du contenu de confiance |

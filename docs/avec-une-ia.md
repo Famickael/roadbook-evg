@@ -8,8 +8,8 @@ Le plus rapide pour adapter ce roadbook à un week-end est de confier le travail
 |---|---|
 | `AGENTS.md` | Le guide lu par les assistants de programmation : quel fichier ouvrir selon la demande, les règles du projet, la façon de vérifier |
 | `CLAUDE.md` | Renvoie vers `AGENTS.md`, pour les outils qui cherchent ce nom de fichier |
-| L'en-tête de `donnees.js` | La liste de tous les champs, en 50 lignes |
-| `?verifier` | Ajouté à l'adresse de la page, il liste les incohérences du fichier de données |
+| L'en-tête de `donnees.js` | Les réglages généraux et les champs d'une étape, en 50 lignes. Les autres rubriques sont dans `docs/donnees.md` |
+| `?verifier` | Ajouté à l'adresse de la page, il liste les incohérences du fichier de données. Un fichier illisible est signalé même sans cela |
 
 Un assistant n'a donc pas à lire tout le projet pour le modifier, ce qui réduit le temps de travail et la consommation.
 

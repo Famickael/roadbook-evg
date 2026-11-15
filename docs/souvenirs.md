@@ -28,23 +28,39 @@ Le dossier `exemples/` contient un branchement prêt à l'emploi pour [Supabase]
 3. Dans `exemples/stockage-supabase.js`, renseignez l'adresse du projet et sa clé publique.
 4. Dans `index.html`, retirez les marques de commentaire autour de la ligne `<script src="exemples/stockage-supabase.js"></script>`.
 
-Les photos et les vidéos déposées sont alors visibles par tous les participants, sans compte et sans code.
+Les photos déposées sont alors visibles par tous les participants, sans compte et sans code.
 
 Quand le partage est actif, la page s'adapte d'elle-même :
 
-- la galerie se rafraîchit toutes les 60 secondes pour afficher les dépôts des autres,
+- la galerie se rafraîchit toutes les 60 secondes pour afficher les dépôts des autres, en ne téléchargeant que les nouvelles photos,
 - la fenêtre de dépôt indique que le souvenir est partagé avec tout le groupe,
 - la suppression demande confirmation « pour tout le groupe ».
 
 ### Ce qu'il faut savoir
 
 - **L'accès est ouvert par défaut.** Toute personne qui a l'adresse de la page peut voir, déposer et supprimer. Deux protections par code sont proposées en option, décrites dans [Les options](options.md).
-- **Les photos sont enregistrées dans la base**, réduites à 500 Ko au plus. Les vidéos vont dans un espace de fichiers, limité à 50 Mo par vidéo.
-- **Supprimer une vidéo la retire de la galerie**, mais son fichier reste dans l'espace de fichiers du projet. Il se supprime depuis le tableau de bord de Supabase.
+- **Les photos sont enregistrées dans la base**, réduites à 500 Ko au plus, dans la limite de 3 000 souvenirs.
+- **Les vidéos sont désactivées par défaut.** La rubrique suivante explique comment les autoriser et ce que cela implique.
 - **Avec l'offre gratuite**, un projet resté environ une semaine sans activité est mis en pause. Il se relance depuis le tableau de bord. Pensez à télécharger les souvenirs à la fin du week-end.
 - **La clé publique** du projet peut figurer dans la page. La clé « service_role », elle, ne doit jamais y être copiée.
 
-Le script SQL a été vérifié sur une base Postgres (29 contrôles), et l'adaptateur avec un service simulé. L'ensemble n'a pas été déployé sur un projet Supabase réel : un essai avec une photo et une vidéo est à faire avant le week-end.
+Le script SQL a été vérifié sur une base Postgres, et l'adaptateur avec un service simulé. L'ensemble n'a pas été déployé sur un projet Supabase réel : un essai avec une photo est à faire avant le week-end.
+
+### Autoriser les vidéos
+
+Les vidéos et les messages vidéo demandent un second script, parce qu'ils s'appuient sur un espace de fichiers moins protégé que la base.
+
+1. Lisez l'avertissement en tête de `exemples/supabase-videos.sql`, puis exécutez ce script dans l'éditeur SQL.
+2. Dans `exemples/stockage-supabase.js`, passez `VIDEOS` à `true`.
+
+À savoir avant de le faire :
+
+- Toute personne qui a l'adresse de la page peut déposer des fichiers vidéo de 50 Mo au plus dans cet espace, même si un code d'accès est réglé.
+- Une vidéo est lisible par quiconque connaît l'adresse exacte de son fichier.
+- Supprimer une vidéo la retire de la galerie, mais son fichier reste dans l'espace de fichiers. Il se supprime depuis le tableau de bord de Supabase.
+- Ce réglage convient à un groupe d'amis et à une page peu diffusée. Surveillez l'espace utilisé, et supprimez l'espace de fichiers à la fin du week-end.
+
+Cette partie n'a pas été essayée sur un projet Supabase réel.
 
 ### Brancher un autre service
 
@@ -52,7 +68,7 @@ Un adaptateur est un fichier qui définit `window.ROADBOOK_STOCKAGE` avant le sc
 
 ```js
 window.ROADBOOK_STOCKAGE = {
-  videos: true,      // false si le service ne gère pas les vidéos
+  videos: false,     // true si le service gère les vidéos
   rafraichir: 60,    // délai de mise à jour de la galerie, en secondes
   lister: function () { /* renvoie une promesse : la liste des souvenirs */ },
   ajouter: function (rec) { /* renvoie une promesse, résolue après l'enregistrement */ },
@@ -77,7 +93,7 @@ Un souvenir a la forme suivante :
 
 À l'ajout, `data` contient la photo réduite sous forme de texte, ou le fichier lui-même pour une vidéo. À la lecture, `data` peut être ce même texte ou l'adresse d'un fichier en ligne.
 
-Le fichier `exemples/stockage-supabase.js` fait une centaine de lignes et peut servir de modèle.
+Le fichier `exemples/stockage-supabase.js` fait environ 130 lignes et peut servir de modèle. Une erreur renvoyée par l'adaptateur est affichée telle quelle au visiteur : son message doit donc être compréhensible.
 
 Les précautions à prendre avec un stockage partagé sont décrites dans [Précautions d'usage et limites](precautions.md).
 

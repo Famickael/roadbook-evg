@@ -21,7 +21,8 @@ Ne lisez que ce qui sert à la demande. `index.html` fait plus de 1 100 lignes :
 | Régler le camion, la météo, la version souvenir | `docs/personnaliser.md` | `donnees.js` |
 | Activer une option (surprise, messages vidéo, codes) | `docs/options.md` | `donnees.js` |
 | Brancher le partage des photos | `docs/souvenirs.md`, `exemples/` | `exemples/stockage-supabase.js`, une ligne de `index.html` |
-| Changer les couleurs | Bloc `:root` de `index.html` (lignes 10 à 25) | `index.html` |
+| Comprendre une rubrique de données autre qu'une étape | `docs/donnees.md` | Rien |
+| Changer les couleurs | Bloc `:root`, en tête de la balise `<style>` de `index.html` | `index.html` |
 | Changer le personnage ou le camion | Section 3 du script | `index.html` |
 | Modifier le comportement de la page | La section du script concernée | `index.html` |
 
@@ -45,11 +46,12 @@ Cherchez ces commentaires plutôt que de vous fier à des numéros de ligne.
 - **Pas de donnée personnelle réelle** dans le dépôt : ni nom, ni adresse, ni téléphone, ni photo de personne.
 - **Pas de clé secrète** dans les fichiers. Seule une clé publique peut figurer dans `exemples/stockage-supabase.js`.
 - **Le stockage local est préfixé** par l'adresse de la page (variable `NS`). Utilisez ce préfixe pour toute nouvelle donnée mémorisée.
+- **Dans la page, les identifiants issus des données sont préfixés** : `jour-` pour une journée, `af-` pour une tâche, `f-` pour une fenêtre. Les étapes portent leur identifiant dans l'attribut `data-etape`.
 - **La page doit rester utilisable au clavier et sur un écran de 360 pixels de large.**
 
 ## Vérifier une modification
 
-1. Ouvrez `index.html` dans un navigateur, avec `?verifier` à la fin de l'adresse. Un encadré signale les incohérences de `donnees.js` : identifiant en double, heure mal écrite, fiche introuvable, photo sans étape.
+1. Ouvrez `index.html` dans un navigateur, avec `?verifier` à la fin de l'adresse. Un encadré signale les incohérences de `donnees.js` : identifiant en double, heure ou date impossible, fiche introuvable, photo sans étape, rubrique ou option mal orthographiée. Tout nouveau champ de premier niveau doit être ajouté à la liste `CLES` de cette vérification.
 2. Vérifiez que la console du navigateur ne montre aucune erreur.
 3. Pour tester le dépôt et le téléchargement de photos, servez le dossier : `python3 -m http.server 8000`.
 4. Pour tester le camion en mode horaire, réglez temporairement les dates de `donnees.js` sur la date du jour.

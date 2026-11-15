@@ -2,6 +2,19 @@
 
 Les évolutions notables du projet, de la plus récente à la plus ancienne.
 
+## 15 novembre 2026 : corrections après une relecture indépendante
+
+Relecture et corrections réalisées avec Claude Fable 5.2.
+
+- Onglets : le titre de la journée ne passe plus sous le bandeau et la barre des jours.
+- Vérification des données : un fichier illisible est signalé d'office, et les contrôles couvrent les dates et heures impossibles, les doublons, les rubriques et options mal orthographiées.
+- Partage des photos : seules les nouvelles photos sont téléchargées à chaque rafraîchissement, les messages d'erreur disent la cause réelle, l'accès direct aux tables est entièrement retiré.
+- Vidéos partagées : désactivées par défaut et déplacées dans un script séparé, avec un avertissement sur l'espace de fichiers.
+- Étape surprise : identifiant neutre dans l'exemple, et fiche conservée quand une étape visible l'utilise aussi.
+- Accessibilité : nom des fenêtres, focus à l'ouverture et à la fermeture, flèches du clavier dans la galerie, boutons de 44 pixels, contrastes.
+- Météo calculée dans le fuseau du lieu. Numéros de téléphone avec indicatif acceptés.
+- Documentation : référence complète des rubriques de `donnees.js`.
+
 ## 15 novembre 2026 : modèle réutilisable
 
 Révision réalisée avec Claude Fable 5.2.
@@ -20,7 +33,7 @@ Révision réalisée avec Claude Fable 5.2.
 
 ## Août à novembre 2026 : version d'origine
 
-Conception et développement avec Claude Opus 5.5, pour un week-end réel. Cette version n'est pas publiée.
+Conception et développement avec Claude Opus 5.5, pour un week-end réel. Cette version, liée à ce week-end, n'est pas reprise dans ce dépôt.
 
 - Frise du programme par journée, fiches pratiques, liste à faire et budget par personne.
 - Météo dynamique, des prévisions au temps réellement constaté.

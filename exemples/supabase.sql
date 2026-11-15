@@ -10,7 +10,10 @@
 --
 -- Deux protections facultatives sont décrites dans docs/options.md :
 --   un code pour voir et déposer, un code pour supprimer.
--- Elles s'activent à la fin de ce fichier, partie 4.
+-- Elles s'activent à la fin de ce fichier, partie 3.
+--
+-- Ce script ne gère que les photos. Les vidéos demandent un second script,
+-- exemples/supabase-videos.sql, à lire avant de l'exécuter.
 -- ==========================================================================
 
 
@@ -40,6 +43,7 @@ on conflict (cle) do nothing;
 -- Aucun accès direct aux tables : la page passe par les fonctions ci-dessous
 alter table public.souvenirs         enable row level security;
 alter table public.roadbook_reglages enable row level security;
+revoke all on public.souvenirs, public.roadbook_reglages from anon, authenticated;
 
 
 -- 2. LES FONCTIONS APPELÉES PAR LA PAGE --------------------------------------
@@ -55,8 +59,23 @@ as $$
     true);
 $$;
 
--- Lire tous les souvenirs
-create or replace function public.souvenirs_lister(p_code text default '')
+-- Liste légère : les identifiants de tous les souvenirs, sans les images.
+-- La page l'appelle à chaque rafraîchissement, puis ne charge que les nouveautés.
+create or replace function public.souvenirs_index(p_code text default '')
+returns setof bigint
+language plpgsql stable security definer set search_path = public
+as $$
+begin
+  if not public.roadbook_code_ok('code_acces', p_code) then
+    raise exception 'Code refusé' using errcode = '28000';
+  end if;
+  return query select id from public.souvenirs order by id;
+end;
+$$;
+
+-- Lire les souvenirs : tous, ou seulement ceux dont les identifiants sont donnés
+drop function if exists public.souvenirs_lister(text);
+create or replace function public.souvenirs_lister(p_code text default '', p_ids bigint[] default null)
 returns setof public.souvenirs
 language plpgsql stable security definer set search_path = public
 as $$
@@ -64,7 +83,10 @@ begin
   if not public.roadbook_code_ok('code_acces', p_code) then
     raise exception 'Code refusé' using errcode = '28000';
   end if;
-  return query select * from public.souvenirs order by pris_le, id;
+  return query
+    select * from public.souvenirs
+    where p_ids is null or id = any(p_ids)
+    order by pris_le, id;
 end;
 $$;
 
@@ -92,14 +114,21 @@ begin
   if (p_data is null) = (p_chemin is null) then
     raise exception 'Il faut une photo ou une vidéo' using errcode = '22023';
   end if;
-  if p_data is not null and (left(p_data, 23) <> 'data:image/jpeg;base64,' or length(p_data) > 700000) then
+  if p_data is not null and (length(p_data) > 700000 or p_data !~ '^data:image/jpeg;base64,[A-Za-z0-9+/=]+$') then
     raise exception 'Photo refusée : format ou poids' using errcode = '22023';
+  end if;
+  if (select count(*) from public.souvenirs) >= 3000 then
+    raise exception 'Stockage plein' using errcode = '22023';
+  end if;
+  -- Une date de prise de vue absurde est remplacée par la date du dépôt
+  if p_pris_le is null or p_pris_le < now() - interval '20 years' or p_pris_le > now() + interval '2 days' then
+    p_pris_le := now();
   end if;
   if p_chemin is not null and p_chemin !~ '^[A-Za-z0-9._-]{1,120}$' then
     raise exception 'Nom de fichier invalide' using errcode = '22023';
   end if;
   insert into public.souvenirs (etape, data, chemin, message, auteur, pris_le)
-  values (p_etape, p_data, p_chemin, coalesce(p_message, false), left(p_auteur, 40), coalesce(p_pris_le, now()))
+  values (p_etape, p_data, p_chemin, coalesce(p_message, false), left(p_auteur, 40), p_pris_le)
   returning id into v_id;
   return v_id;
 end;
@@ -125,32 +154,19 @@ begin
 end;
 $$;
 
--- La page (rôle anon) ne peut appeler que les 3 fonctions publiques
+-- La page (rôle anon) ne peut appeler que les 4 fonctions publiques
 revoke all on function public.roadbook_code_ok(text, text) from public, anon, authenticated;
-revoke all on function public.souvenirs_lister(text) from public;
+revoke all on function public.souvenirs_index(text) from public;
+revoke all on function public.souvenirs_lister(text, bigint[]) from public;
 revoke all on function public.souvenirs_ajouter(text, text, text, text, timestamptz, boolean, text) from public;
 revoke all on function public.souvenirs_supprimer(bigint, text) from public;
-grant execute on function public.souvenirs_lister(text) to anon;
+grant execute on function public.souvenirs_index(text) to anon;
+grant execute on function public.souvenirs_lister(text, bigint[]) to anon;
 grant execute on function public.souvenirs_ajouter(text, text, text, text, timestamptz, boolean, text) to anon;
 grant execute on function public.souvenirs_supprimer(bigint, text) to anon;
 
 
--- 3. L'ESPACE DE FICHIERS POUR LES VIDÉOS ------------------------------------
--- Les photos sont enregistrées dans la table. Les vidéos, plus lourdes, vont
--- dans un espace de fichiers public, limité à 50 Mo par fichier.
--- Si vous n'utilisez pas les vidéos, cette partie peut être retirée.
-
-insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('roadbook-videos', 'roadbook-videos', true, 52428800, array['video/*'])
-on conflict (id) do nothing;
-
-drop policy if exists "roadbook : depot de videos" on storage.objects;
-create policy "roadbook : depot de videos" on storage.objects
-  for insert to anon
-  with check (bucket_id = 'roadbook-videos');
-
-
--- 4. OPTIONS : CODES D'ACCÈS ET DE SUPPRESSION -------------------------------
+-- 3. OPTIONS : CODES D'ACCÈS ET DE SUPPRESSION -------------------------------
 -- Pour activer un code, retirez les deux tirets en début de ligne, remplacez
 -- la valeur, exécutez la ligne, puis passez l'option correspondante à true
 -- dans donnees.js (codeAccesPhotos ou codeSuppression).

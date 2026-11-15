@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roadbook de week-end</title>
-<meta name="description" content="Modèle de roadbook de week-end entre amis : programme, météo, liste à faire, budget, infos pratiques et dépôt de photos. Données fictives.">
+<meta name="description" content="Modèle de roadbook de week-end entre amis : programme, météo, liste à faire, budget, infos pratiques et dépôt de photos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -38,45 +38,42 @@ header{position:relative;overflow:hidden;background:var(--route);color:#fff;padd
 @keyframes eat{0%,100%{transform:scale(1)}50%{transform:scale(1.1) translateY(-1px)}}
 .actor.floatup{animation:floatup 1.8s ease-out forwards}
 @keyframes floatup{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-36px);opacity:0}}
-.hd-eyebrow{font-family:'Barlow Condensed';font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;opacity:.85}
-header h1{font-family:'Barlow Condensed';font-weight:800;font-size:2.1rem;line-height:1.05;text-transform:uppercase;margin:.3rem 0 .4rem}
-.hd-route{display:flex;align-items:center;gap:.5rem;font-family:'Barlow Condensed';font-weight:700;font-size:1.05rem;text-transform:uppercase;flex-wrap:wrap}
+.hd-eyebrow{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.8rem;opacity:.85}
+header h1{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:2.1rem;line-height:1.05;text-transform:uppercase;margin:.3rem 0 .4rem}
+.hd-route{display:flex;align-items:center;gap:.5rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.05rem;text-transform:uppercase;flex-wrap:wrap}
 .hd-route .arrow{font-size:1.2rem}
 
 /* ---------- Bandeau organisateurs ---------- */
 .orga{position:sticky;top:0;z-index:60;background:var(--borne);color:#fff;padding:10px 18px;font-weight:700;font-size:.92rem;display:flex;gap:.6rem;align-items:center}
 .orga .dot{flex:0 0 auto;width:18px;height:18px;border-radius:50%;background:#fff;color:var(--borne);font-weight:900;font-size:.85rem;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
 
-/* ---------- Secret ---------- */
-
 /* ---------- Météo ---------- */
 .wx{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 14px;background:#E9E8E1}
 .wxcard{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:.55rem .6rem;text-align:center}
-.wxcard .wxday{font-family:'Barlow Condensed';font-weight:700;font-size:.85rem;text-transform:uppercase;color:#4a4e56}
+.wxcard .wxday{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.85rem;text-transform:uppercase;color:#4a4e56}
 .wxcard .wxmain{font-size:.85rem;font-weight:700;margin:.2rem 0;min-height:2.2em;display:flex;align-items:center;justify-content:center}
 .sun{display:inline-block;font-size:1.3rem;animation:sunspin 8s linear infinite}
 @keyframes sunspin{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.15)}to{transform:rotate(360deg) scale(1)}}
 .wxi{display:inline-block;font-size:1.45rem;animation:breathe 3s ease-in-out infinite}
 .wxi.frozen{animation:none}
 @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-.wxcard .wxtemp{font-family:'Barlow Condensed';font-weight:800;font-size:1.05rem}
+.wxcard .wxtemp{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.05rem}
 .wxcard .wxrain{font-size:.75rem;color:#4a4e56}
-.wxcard a{font-size:.72rem;font-weight:700;display:inline-block;margin-top:.25rem}
 
 /* ---------- Nav sticky cliquable ---------- */
 nav{position:sticky;top:0;z-index:50;background:var(--ink);display:flex}
-nav button{flex:1;text-align:center;color:#fff;background:none;border:none;border-right:1px solid rgba(255,255,255,.15);font-family:'Barlow Condensed';font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:.8rem .2rem;cursor:pointer}
+nav button{flex:1;text-align:center;color:#fff;background:none;border:none;border-right:1px solid rgba(255,255,255,.15);font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1rem;padding:.8rem .2rem;cursor:pointer}
 nav button:last-child{border-right:none}
 nav button:active{background:var(--route)}
 nav button.active{background:var(--amber);color:#231a00}
 
 /* ---------- Sections jour : panneau vert ---------- */
-section{padding:0 0 8px;scroll-margin-top:52px}
+section{padding:0 0 8px;scroll-margin-top:52px}   /* valeur recalculée par le script selon la hauteur du bandeau */
 .day-sign{margin:22px 14px 6px;background:var(--sign);color:#fff;border-radius:8px;padding:14px 16px;box-shadow:inset 0 0 0 3px var(--sign),inset 0 0 0 5px #fff}
-.day-sign .etape{font-family:'Barlow Condensed';font-weight:600;letter-spacing:.15em;font-size:.78rem;text-transform:uppercase;opacity:.9}
-.day-sign h2{font-family:'Barlow Condensed';font-weight:800;font-size:1.5rem;text-transform:uppercase;line-height:1.1}
+.day-sign .etape{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;letter-spacing:.15em;font-size:.78rem;text-transform:uppercase;opacity:.9}
+.day-sign h2{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.5rem;text-transform:uppercase;line-height:1.1}
 .day-sign .sub{font-size:.88rem;margin-top:.2rem;opacity:.95}
-.day-sign .who{font-family:'Barlow Condensed';font-weight:700;font-size:.95rem;letter-spacing:.03em;margin-top:.45rem;background:rgba(255,255,255,.16);border-radius:5px;padding:.25rem .5rem;display:inline-block}
+.day-sign .who{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.95rem;letter-spacing:.03em;margin-top:.45rem;background:rgba(255,255,255,.16);border-radius:5px;padding:.25rem .5rem;display:inline-block}
 
 /* ---------- Timeline route ---------- */
 .road{position:relative;margin:10px 14px 4px;padding-left:34px}
@@ -88,57 +85,52 @@ section{padding:0 0 8px;scroll-margin-top:52px}
 .stop::before{content:"";position:absolute;left:-28px;top:18px;width:16px;height:16px;background:#fff;border:4px solid var(--ink);border-radius:50%}
 .stop.key::before{border-color:var(--borne)}
 .stop.pool::before{border-color:#1D9BD8}
-.fireman-pin{position:absolute;z-index:2;line-height:0;animation:bounce 1.6s ease-in-out infinite;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
-.fireman-pin canvas{display:block;image-rendering:pixelated}
+.camion-pin{position:absolute;z-index:2;line-height:0;animation:bounce 1.6s ease-in-out infinite;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.camion-pin canvas{display:block;image-rendering:pixelated}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-.time{font-family:'Barlow Condensed';font-weight:800;font-size:1.05rem;color:#fff;background:var(--ink);display:inline-block;padding:.05rem .5rem;border-radius:3px;border-top:4px solid var(--borne)}
-.drive{display:inline-block;margin-left:.4rem;font-family:'Barlow Condensed';font-weight:700;font-size:.85rem;color:#fff;background:var(--route);padding:.15rem .5rem;border-radius:3px}
-.dur{display:inline-block;margin-left:.5rem;font-family:'Barlow Condensed';font-weight:700;font-size:.85rem;color:#6a6e76;background:none;padding:0}
+.time{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.05rem;color:#fff;background:var(--ink);display:inline-block;padding:.05rem .5rem;border-radius:3px;border-top:4px solid var(--borne)}
+.dur{display:inline-block;margin-left:.5rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.85rem;color:#6a6e76;background:none;padding:0}
 .meta .done{display:inline-flex;align-items:center;gap:.3rem;font-weight:700;font-size:.85rem;padding:.45rem .7rem;border-radius:6px;background:var(--sign);color:#fff;border:1.5px solid var(--sign)}
-.stop h3{font-family:'Barlow Condensed';font-weight:700;font-size:1.2rem;text-transform:uppercase;margin:.35rem 0 .15rem;line-height:1.1}
+.stop h3{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.2rem;text-transform:uppercase;margin:.35rem 0 .15rem;line-height:1.1}
 .stop p{font-size:.92rem;margin:.25rem 0;color:#3a3e46}
 .meta{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.55rem}
 .meta a,.meta button{display:inline-flex;align-items:center;gap:.3rem;text-decoration:none;font-family:'Barlow',sans-serif;font-weight:700;font-size:.85rem;padding:.45rem .7rem;border-radius:6px;border:1.5px solid var(--route);color:var(--route);background:#fff;cursor:pointer}
-.meta a.call{background:#33CCFF;border:none;color:#062A3A}
-.meta a.book{background:var(--borne);border-color:var(--borne);color:#fff}
 .meta a.waze{background:#33CCFF;border:none;color:#062A3A}
 .meta button.food{background:var(--amber);border-color:var(--amber);color:#231a00}
 .meta .infob{background:#33CCFF;border:none;color:#062A3A;padding:.45rem .6rem;border-radius:6px;font-size:.9rem;font-weight:700;cursor:pointer;line-height:1}
-.leg{margin:-2px 0 12px 2px;display:inline-block;background:#fff;border:1.5px dashed var(--route);color:var(--route);font-family:'Barlow Condensed';font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:14px}
+.leg{margin:-2px 0 12px 2px;display:inline-block;background:#fff;border:1.5px dashed var(--route);color:var(--route);font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.85rem;padding:.15rem .6rem;border-radius:14px}
 .tagrow{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.45rem}
-.tag{font-family:'Barlow Condensed';font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:.12rem .45rem;border-radius:3px;background:#ECEBE4;color:#4a4e56}
+.tag{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;padding:.12rem .45rem;border-radius:3px;background:#ECEBE4;color:#4a4e56}
 .tag.warn{background:var(--amber);color:#231a00}
 .tag.euro{background:var(--ink);color:#fff}
 
 /* ---------- Bloc résas ---------- */
 .resas{margin:26px 14px 10px;background:var(--ink);color:#fff;border-radius:10px;padding:16px 14px 8px;border-top:8px solid var(--borne)}
-.resas h2{font-family:'Barlow Condensed';font-weight:800;font-size:1.4rem;text-transform:uppercase;margin-bottom:.6rem}
+.resas h2{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.4rem;text-transform:uppercase;margin-bottom:.6rem}
 .resa{display:flex;gap:.7rem;align-items:flex-start;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.15)}
 .resa:last-child{border-bottom:none}
 .resa input{width:22px;height:22px;accent-color:var(--borne);flex:0 0 auto;margin-top:.1rem}
 .resa .txt{font-size:.92rem}
-.resa .txt strong{display:block;font-family:'Barlow Condensed';font-weight:700;font-size:1.02rem;text-transform:uppercase;letter-spacing:.02em}
+.resa .txt strong{display:block;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.02rem;text-transform:uppercase;letter-spacing:.02em}
 .resa .due{color:var(--amber);font-weight:700;font-size:.8rem}
 .resa a{color:#9FC1FF;font-weight:700}
 
 /* ---------- Budget ---------- */
 .budget{margin:18px 14px;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.budget h2{font-family:'Barlow Condensed';font-weight:800;font-size:1.25rem;text-transform:uppercase;padding:12px 14px 6px}
+.budget h2{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;padding:12px 14px 6px}
 .budget table{width:100%;border-collapse:collapse;font-size:.9rem}
 .budget td{padding:.55rem 14px;border-top:1px solid var(--line)}
 .budget td:last-child{text-align:right;font-weight:700;white-space:nowrap}
-.budget .total td{background:#ECEBE4;font-weight:700}
 
 /* ---------- Numéros utiles ---------- */
 .phones{margin:0 14px 30px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .phones a{display:block;text-decoration:none;background:var(--card);border:1.5px solid var(--sign);border-radius:8px;padding:.6rem .7rem;color:var(--ink)}
-.phones a b{display:block;font-family:'Barlow Condensed';font-weight:700;font-size:.92rem;text-transform:uppercase;color:var(--sign)}
+.phones a b{display:block;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.92rem;text-transform:uppercase;color:var(--sign)}
 .phones a span{font-size:.82rem;font-weight:700}
-footer{padding:0 18px 34px;font-size:.78rem;color:#6a6e76;text-align:center}
 
 /* ---------- Accès rapide ---------- */
 .quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:26px 14px 30px}
-.qbtn{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.95rem .5rem;font-family:'Barlow Condensed';font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;border-top:5px solid var(--borne)}
+.qbtn{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.95rem .5rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.1rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;border-top:5px solid var(--borne)}
 .quick>.qbtn:last-child:nth-child(odd){grid-column:1/-1}
 .qbtn.lien{display:flex;align-items:center;justify-content:center;text-decoration:none;background:var(--sign);border-top-color:var(--sign)}
 .budget .petit{font-size:.78rem;color:#6a6e76;padding:6px 0 0}
@@ -148,13 +140,13 @@ footer{padding:0 18px 34px;font-size:.78rem;color:#6a6e76;text-align:center}
 .modal .phones{margin:.8rem 0 0}
 
 /* ---------- Photos ---------- */
-.pbtn{position:absolute;top:10px;right:10px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--ink);color:#fff;cursor:pointer;line-height:1}
-.mbtn{position:absolute;top:10px;right:58px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--borne);color:#fff;cursor:pointer;line-height:1;font-family:'Barlow',sans-serif;font-weight:700}
-.meta button.secret{background:none;border:none;color:#8a8e96;font-size:1.1rem;font-weight:700;letter-spacing:.1em;padding:.2rem .4rem;cursor:pointer}
+.pbtn{position:absolute;top:10px;right:10px;min-width:44px;min-height:44px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--ink);color:#fff;cursor:pointer;line-height:1}
+.mbtn{position:absolute;top:10px;right:62px;min-width:44px;min-height:44px;font-size:1rem;padding:.45rem .6rem;border-radius:8px;border:none;background:var(--borne);color:#fff;cursor:pointer;line-height:1;font-family:'Barlow',sans-serif;font-weight:700}
+.meta button.secret{background:none;border:none;color:#6a6e76;font-size:1.1rem;font-weight:700;letter-spacing:.1em;padding:.2rem .4rem;cursor:pointer}
 #verif{margin:14px;padding:12px 14px;border-radius:8px;background:#fff;border:2px solid var(--amber);font-size:.9rem}
 #verif.ok{border-color:var(--sign)}
 #verif ul{padding-left:1.2rem;margin-top:.4rem}
-.pstack{display:none;position:absolute;top:48px;right:10px;flex-direction:column;align-items:flex-end;cursor:pointer;z-index:2}
+.pstack{display:none;position:absolute;top:62px;right:10px;flex-direction:column;align-items:flex-end;cursor:pointer;z-index:2}
 .pstack img{width:74px;height:74px;object-fit:cover;border-radius:6px;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.3);transform:rotate(-4deg)}
 .pstack>*+*{margin-top:-38px}
 .vtile{width:74px;height:74px;border-radius:6px;border:2px solid #fff;background:#111318;color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 1px 4px rgba(0,0,0,.3);transform:rotate(3deg)}
@@ -162,41 +154,40 @@ footer{padding:0 18px 34px;font-size:.78rem;color:#6a6e76;text-align:center}
 .stop.has-photos h3,.stop.has-photos p,.stop.has-photos .tagrow,.stop.has-photos .meta{padding-right:96px}
 .pstack img:nth-child(2){transform:rotate(3deg)}
 .pstack img:nth-child(3){transform:rotate(-1deg)}
-.pmore{margin-top:4px;font-family:'Barlow Condensed';font-weight:700;font-size:.85rem;color:#4a4e56}
-.slide-wrap{position:relative;background:#111318;border-radius:10px;overflow:hidden}
+.pmore{margin-top:4px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.85rem;color:#4a4e56}
+.slide-wrap{position:relative;background:#111318;border-radius:10px;overflow:hidden;min-height:140px}
 #gimg{width:100%;max-height:58vh;object-fit:contain;display:block}
 .gnavbtn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.92);color:var(--ink);font-size:1.5rem;font-weight:700;cursor:pointer;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 #gprev{left:8px}
 #gnext{right:8px}
 .gnavbtn:disabled{opacity:.25}
-#gcap{font-family:'Barlow Condensed';font-weight:800;font-size:1.05rem;text-transform:uppercase;color:var(--sign);margin:.2rem 0 .5rem;min-height:1.2em}
-#gcount{text-align:center;font-family:'Barlow Condensed';font-weight:700;font-size:.9rem;color:#6a6e76;margin:.4rem 0 0}
+#gcap{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.05rem;text-transform:uppercase;color:var(--sign);margin:.2rem 0 .5rem;min-height:1.2em}
+#gcount{text-align:center;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:.9rem;color:#6a6e76;margin:.4rem 0 0}
 .gbtns{display:flex;gap:8px;margin:10px 0 2px;justify-content:center}
-.gbtns a,.gbtns button{font-family:'Barlow',sans-serif;font-weight:700;font-size:.8rem;padding:.35rem .6rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none}
+.gbtns button{font-family:'Barlow',sans-serif;font-weight:700;font-size:.8rem;padding:.35rem .6rem;border-radius:6px;border:none;cursor:pointer;text-decoration:none}
 #gdl{background:#33CCFF;color:#062A3A}
-#gdel{background:#ECEBE4;color:var(--borne)}
-.srcbtn{display:block;width:100%;margin:.45rem 0;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.8rem;font-family:'Barlow Condensed';font-weight:700;font-size:1.05rem;text-transform:uppercase;cursor:pointer}
-#m-gal h4{font-family:'Barlow Condensed';font-weight:800;font-size:1.05rem;text-transform:uppercase;color:var(--sign);margin:.9rem 0 .2rem}
+#gdel{background:#ECEBE4;color:#A8261F}
+.srcbtn{display:block;width:100%;margin:.45rem 0;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.8rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.05rem;text-transform:uppercase;cursor:pointer}
 .retro{margin:26px 14px 8px;background:var(--sign);color:#fff;border-radius:10px;padding:16px 14px;box-shadow:inset 0 0 0 3px var(--sign),inset 0 0 0 5px #fff;text-align:center;cursor:pointer}
-.retro h2{font-family:'Barlow Condensed';font-weight:800;font-size:1.35rem;text-transform:uppercase}
+.retro h2{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.35rem;text-transform:uppercase}
 .retro p{font-size:.85rem;opacity:.95;margin-top:.2rem}
 .retro-truck{display:flex;justify-content:center;margin-bottom:8px}
 .retro-truck canvas{image-rendering:pixelated}
 #gall{background:#062A3A;color:#33CCFF}
 .gbtns button{white-space:nowrap}
-@media (max-width:420px){.gbtns{gap:5px}.gbtns a,.gbtns button{padding:.35rem .45rem;font-size:.76rem}}
+@media (max-width:420px){.gbtns{gap:5px}.gbtns button{padding:.35rem .45rem;font-size:.76rem}}
 #gall:disabled{opacity:.75;cursor:wait}
 
 /* ---------- Popups ---------- */
 .overlay{display:none;position:fixed;inset:0;background:rgba(21,24,30,.72);z-index:100;padding:20px 14px;overflow-y:auto}
 .overlay.open{display:block}
 .modal{background:var(--card);border-radius:12px;max-width:520px;margin:4vh auto 0;padding:18px 16px 14px;border-top:8px solid var(--amber)}
-.modal h3{font-family:'Barlow Condensed';font-weight:800;font-size:1.35rem;text-transform:uppercase;margin-bottom:.5rem}
-.modal h4{font-family:'Barlow Condensed';font-weight:700;font-size:1rem;text-transform:uppercase;color:var(--sign);margin:.7rem 0 .2rem}
+.modal h3{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:800;font-size:1.35rem;text-transform:uppercase;margin-bottom:.5rem}
+.modal h4{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;color:var(--sign);margin:.7rem 0 .2rem}
 .modal ul{padding-left:1.2rem;font-size:.92rem}
 .modal li{margin:.2rem 0}
 .modal .note{font-size:.82rem;color:#6a6e76;margin-top:.6rem}
-.modal .close{display:block;width:100%;margin-top:.9rem;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.7rem;font-family:'Barlow Condensed';font-weight:700;font-size:1rem;text-transform:uppercase;cursor:pointer}
+.modal .close{display:block;width:100%;margin-top:.9rem;background:var(--ink);color:#fff;border:none;border-radius:8px;padding:.7rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
 @media(min-width:640px){body{max-width:640px;margin:0 auto}header h1{font-size:2.5rem}}
 </style>
@@ -252,29 +243,35 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
   var wx="";
   jours.forEach(function(j,k){
     if(!j.meteo){return;}
-    wx+='<div class="wxcard" id="wx'+k+'"><div class="wxday">'+j.onglet.split(" ")[0]+' · '+j.meteo.lieu+'</div><div class="wxmain"><span class="sun">☀️</span></div><div class="wxtemp"></div><div class="wxrain">Chargement…</div></div>';
+    wx+='<div class="wxcard" id="wx'+k+'"><div class="wxday">'+String(j.onglet||"").split(" ")[0]+' · '+(j.meteo.lieu||"")+'</div><div class="wxmain"><span class="sun">☀️</span></div><div class="wxtemp"></div><div class="wxrain">Chargement…</div></div>';
   });
   if(wx){el("wx").innerHTML=wx;}else{el("wx").style.display="none";}
 
   // Onglets des jours
-  el("onglets").innerHTML=jours.map(function(j){return '<button data-t="'+j.id+'">'+j.onglet+'</button>';}).join("");
+  el("onglets").innerHTML=jours.map(function(j){return '<button data-t="jour-'+j.id+'">'+(j.onglet||j.id)+'</button>';}).join("");
 
   // Programme
   // Étapes surprises : tant que le code n'a pas été saisi, l'étape affiche le titre et le texte de couverture
   var SURP=NS+"surprises",ouvertes={};
   try{(JSON.parse(localStorage.getItem(SURP)||"[]")||[]).forEach(function(id){ouvertes[id]=true;});}catch(e){}
-  var fichesMasquees={},codes={};
+  var fichesMasquees={},codes={},fichesVisibles={};
+  function verrouillee(s){return !!(s.surprise&&s.surprise.code&&orga&&!ouvertes[s.id]);}
+  jours.forEach(function(j){(j.programme||[]).forEach(function(s){
+    if(s.trajet&&!s.id){return;}
+    var cible=verrouillee(s)?fichesMasquees:fichesVisibles;
+    if(s.fiche){cible[s.fiche]=true;}
+    (s.fenetres||[]).forEach(function(f){cible[f.id]=true;});
+  });});
+  Object.keys(fichesVisibles).forEach(function(id){delete fichesMasquees[id];});
   var html="",premier=true;
   jours.forEach(function(j){
-    html+='<section id="'+j.id+'"><div class="day-sign"><div class="etape">'+(j.etape||"")+'</div><h2>'+j.titre+'</h2>'
+    html+='<section id="jour-'+j.id+'"><div class="day-sign"><div class="etape">'+(j.etape||"")+'</div><h2>'+(j.titre||"")+'</h2>'
       +(j.trajet?'<div class="sub">'+j.trajet+'</div>':'')+(j.qui?'<div class="who">👥 '+j.qui+'</div>':'')+'</div><div class="road">';
     (j.programme||[]).forEach(function(s){
       if(s.trajet){html+='<div class="leg">'+s.trajet+'</div>';return;}
       var meta="";
-      if(s.surprise&&s.surprise.code&&orga&&!ouvertes[s.id]){
+      if(verrouillee(s)){
         codes[s.id]=s.surprise.code;
-        if(s.fiche){fichesMasquees[s.fiche]=true;}
-        (s.fenetres||[]).forEach(function(f){fichesMasquees[f.id]=true;});
         s={id:s.id,heure:s.heure,duree:s.duree,type:s.type,titre:s.surprise.titre||"Surprise",texte:s.surprise.texte||""};
         meta='<button class="secret" data-secret="'+s.id+'" aria-label="Réservé aux organisateurs">···</button>';
       }
@@ -284,7 +281,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
       if(s.itineraire){meta+='<a class="waze" href="https://waze.com/ul?q='+encodeURIComponent(s.itineraire)+'&navigate=yes">🧭 Waze</a>';}
       html+='<div class="stop'+(s.type==="cle"?" key":s.type==="detente"?" pool":"")+'" data-etape="'+s.id+'">'
         +'<span class="time">'+s.heure+'</span>'+(s.duree?'<span class="dur">⏱ '+s.duree+'</span>':'')
-        +'<h3>'+s.titre+'</h3>'+(premier?'<span class="fireman-pin" id="fireman-pin" title="On en est là"></span>':'')
+        +'<h3>'+s.titre+'</h3>'+(premier?'<span class="camion-pin" id="camion-pin" title="On en est là"></span>':'')
         +(s.texte?'<p>'+s.texte+'</p>':'')
         +((s.alerte||(s.prix&&orga))?'<div class="tagrow">'+(s.alerte?'<span class="tag warn">'+s.alerte+'</span>':'')+(s.prix&&orga?'<span class="tag euro">'+s.prix+'</span>':'')+'</div>':'')
         +(meta?'<div class="meta">'+meta+'</div>':'')+'</div>';
@@ -314,7 +311,7 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
       +D.aFaire.map(function(a,n){
         var id=a.id||("r"+(n+1));
         var suite=[a.detail,a.echeance?'<span class="due">'+a.echeance+'</span>':""].filter(Boolean).join(" · ");
-        return '<div class="resa"><input type="checkbox" id="'+id+'"'+(a.fait?" checked":"")+'><label class="txt" for="'+id+'"><strong>'+(n+1)+' · '+a.titre+'</strong>'+suite+'</label></div>';
+        return '<div class="resa"><input type="checkbox" id="af-'+id+'"'+(a.fait?" checked":"")+'><label class="txt" for="af-'+id+'"><strong>'+(n+1)+' · '+a.titre+'</strong>'+suite+'</label></div>';
       }).join("")
       +'</div><p class="note">Les cases cochées sont mémorisées dans ce navigateur.</p><button class="close">Fermer</button></div></div>';
   }
@@ -333,7 +330,8 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
     fen+='<div class="overlay" id="m-infos"><div class="modal"><h3>ℹ️ Infos pratiques</h3>'
       +(D.infos||[]).map(function(i){return '<h4>'+i.lieu+'</h4><ul><li>'+i.detail+'</li></ul>';}).join("")
       +((D.telephones||[]).length?'<div class="phones">'+D.telephones.map(function(t){
-        return '<a href="tel:+33'+t.numero.replace(/\D/g,"").slice(1)+'"><b>'+t.nom+'</b><span>'+t.numero+'</span></a>';}).join("")+'</div>':'')
+        var ch=String(t.numero||"").replace(/[^0-9+]/g,"");   // 01 23 45 67 89 devient +33123456789, un numéro en +… est gardé tel quel
+        return '<a href="tel:'+(ch.charAt(0)==="0"?"+33"+ch.slice(1):ch)+'"><b>'+t.nom+'</b><span>'+t.numero+'</span></a>';}).join("")+'</div>':'')
       +(D.noteInfos?'<p class="note">'+D.noteInfos+'</p>':'')
       +'<button class="close">Fermer</button></div></div>';
   }
@@ -353,34 +351,65 @@ var NS="roadbook:"+location.pathname.replace(/index\.html$/,"")+":";
     });
   });
 
-  // Vérification du fichier de données : toujours dans la console, et à l'écran avec ?verifier dans l'adresse
-  var pb=[],ids={},nbEtapes=0;
+  // Vérification du fichier de données : toujours dans la console, et à l'écran avec ?verifier dans l'adresse.
+  // Si le fichier est illisible ou vide, le message s'affiche dans tous les cas.
+  var pb=[],ids={},idsJour={},nbEtapes=0,datePrec="";
+  function dateOk(d){if(!/^\d{4}-\d{2}-\d{2}$/.test(d||"")){return false;}var t=new Date(d+"T12:00:00Z");return !isNaN(t)&&t.toISOString().slice(0,10)===d;}
+  function heureOk(h){var m=/^(\d{1,2}):(\d{2})$/.exec(h||"");return !!m&&+m[1]<24&&+m[2]<60;}
+  var CLES=["titre","surtitre","accroche","bandeau","finBandeau","fuseau","camion","animations","souvenir","options","lienDepenses","retrospective","jours","fenetres","aFaire","budget","infos","telephones","noteInfos","photos"];
+  var OPTS=["messagesVideo","codeAccesPhotos","codeSuppression"];
+  var vide=!window.ROADBOOK||!jours.length;
+  if(vide){pb.push("Le fichier donnees.js n'a pas pu être lu, ou il ne contient aucune journée. La cause la plus fréquente est une virgule, une accolade ou un guillemet manquant : la console du navigateur indique la ligne.");}
+  Object.keys(D).forEach(function(k){if(CLES.indexOf(k)<0){pb.push("Rubrique inconnue : « "+k+" ». Vérifiez l'orthographe.");}});
+  Object.keys(D.options||{}).forEach(function(k){if(OPTS.indexOf(k)<0){pb.push("Option inconnue : « "+k+" ». Les options sont "+OPTS.join(", ")+".");}});
+  Object.keys(D.fenetres||{}).forEach(function(k){
+    if(!/^[A-Za-z0-9_-]+$/.test(k)){pb.push("Fenêtre « "+k+" » : l'identifiant ne doit contenir ni espace ni accent.");}
+    if(!D.fenetres[k]||!D.fenetres[k].titre){pb.push("Fenêtre « "+k+" » : il manque « titre ».");}
+  });
   jours.forEach(function(j,k){
+    var nomJ=j.id||("n°"+(k+1));
     if(!j.id){pb.push("Journée n°"+(k+1)+" : il manque « id ».");}
-    if(!/^\d{4}-\d{2}-\d{2}$/.test(j.date||"")){pb.push("Journée « "+(j.id||k+1)+" » : « date » doit s'écrire AAAA-MM-JJ.");}
+    else if(!/^[A-Za-z0-9_-]+$/.test(j.id)){pb.push("Journée « "+j.id+" » : l'identifiant ne doit contenir ni espace ni accent.");}
+    else if(idsJour[j.id]){pb.push("Identifiant de journée en double : « "+j.id+" ».");}
+    idsJour[j.id]=true;
+    if(!j.onglet){pb.push("Journée « "+nomJ+" » : il manque « onglet ».");}
+    if(!j.titre){pb.push("Journée « "+nomJ+" » : il manque « titre ».");}
+    if(!dateOk(j.date)){pb.push("Journée « "+nomJ+" » : « date » doit être une date réelle, écrite AAAA-MM-JJ.");}
+    else{if(datePrec&&j.date<datePrec){pb.push("Journée « "+nomJ+" » : les journées doivent être dans l'ordre des dates.");}datePrec=j.date;}
+    if(j.meteo&&(typeof j.meteo.lat!=="number"||typeof j.meteo.lon!=="number")){pb.push("Journée « "+nomJ+" » : « meteo » demande « lat » et « lon », écrits comme des nombres.");}
     (j.programme||[]).forEach(function(s){
-      if(s.trajet){return;}
+      if(s.trajet){if(s.id||s.titre||s.heure){pb.push("Une ligne « trajet » ne doit rien contenir d'autre : « "+s.trajet+" ».");}return;}
       nbEtapes++;
       var nom=s.id||s.titre||"sans nom";
       if(!s.id){pb.push("Étape « "+nom+" » : il manque « id ».");}
       else if(ids[s.id]){pb.push("Identifiant d'étape en double : « "+s.id+" ».");}
       else if(!/^[A-Za-z0-9_-]+$/.test(s.id)){pb.push("Étape « "+s.id+" » : l'identifiant ne doit contenir ni espace ni accent.");}
       ids[s.id]=true;
-      if(!/^\d{1,2}:\d{2}$/.test(s.heure||"")){pb.push("Étape « "+nom+" » : « heure » doit s'écrire HH:MM.");}
+      if(!heureOk(s.heure)){pb.push("Étape « "+nom+" » : « heure » doit être une heure réelle, écrite HH:MM.");}
       if(!s.titre){pb.push("Étape « "+nom+" » : il manque « titre ».");}
       if(s.fiche&&!(D.fenetres||{})[s.fiche]){pb.push("Étape « "+nom+" » : la fiche « "+s.fiche+" » n'existe pas dans « fenetres ».");}
       (s.fenetres||[]).forEach(function(f){if(!(D.fenetres||{})[f.id]){pb.push("Étape « "+nom+" » : la fenêtre « "+f.id+" » n'existe pas dans « fenetres ».");}});
       if(s.surprise&&!s.surprise.code){pb.push("Étape « "+nom+" » : « surprise » demande un « code ».");}
     });
   });
-  (D.photos||[]).forEach(function(ph){if(!ids[ph.etape]){pb.push("Photo « "+ph.fichier+" » : l'étape « "+ph.etape+" » n'existe pas.");}});
+  var idsPhoto={};
+  (D.photos||[]).forEach(function(ph,k){
+    var nomP=ph.fichier||("n°"+(k+1));
+    if(!ph.fichier){pb.push("Photo n°"+(k+1)+" : il manque « fichier ».");}
+    if(ph.id===undefined||ph.id===null||ph.id===""){pb.push("Photo « "+nomP+" » : il manque « id ».");}
+    else if(idsPhoto[ph.id]){pb.push("Identifiant de photo en double : « "+ph.id+" ».");}
+    idsPhoto[ph.id]=true;
+    if(!ids[ph.etape]){pb.push("Photo « "+nomP+" » : l'étape « "+ph.etape+" » n'existe pas.");}
+    if(isNaN(new Date(ph.date))){pb.push("Photo « "+nomP+" » : « date » n'est pas une date lisible.");}
+  });
   var vus={};(D.aFaire||[]).forEach(function(a){if(a.id){if(vus[a.id]){pb.push("Liste à faire : identifiant en double « "+a.id+" ».");}vus[a.id]=true;}});
   if(!/^[+-]\d{2}:\d{2}$/.test(FUSEAU)){pb.push("« fuseau » doit s'écrire comme \"+02:00\".");}
   if(["auto","horaire","lecture"].indexOf(D.camion||"auto")<0){pb.push("« camion » doit valoir \"auto\", \"horaire\" ou \"lecture\".");}
+  if(D.finBandeau&&isNaN(new Date(D.finBandeau))){pb.push("« finBandeau » n'est pas une date lisible.");}
   pb.forEach(function(m){if(window.console){console.warn("[roadbook] "+m);}});
-  if(/[?&]verifier\b/.test(location.search)){
+  if(vide||/[?&]verifier\b/.test(location.search)){
     var v=document.createElement("div");v.id="verif";
-    if(pb.length){v.innerHTML="<b>"+pb.length+" point(s) à corriger dans donnees.js</b><ul>"+pb.map(function(m){return "<li>"+m.replace(/</g,"&lt;")+"</li>";}).join("")+"</ul>";}
+    if(pb.length){v.innerHTML="<b>"+pb.length+" point(s) à corriger dans donnees.js</b><ul>"+pb.map(function(m){return "<li>"+m.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</li>";}).join("")+"</ul>";}
     else{v.className="ok";v.innerHTML="<b>donnees.js : aucun problème détecté</b> · "+jours.length+" journée(s), "+nbEtapes+" étape(s), "+(D.photos||[]).length+" photo(s) de démonstration.";}
     document.body.insertBefore(v,document.body.firstChild);
   }
@@ -398,12 +427,15 @@ document.querySelectorAll("nav button").forEach(function(b){
 document.querySelectorAll("[data-m]").forEach(function(b){
   b.addEventListener("click",function(){
     var m=document.getElementById(b.dataset.m);
-    if(m){m.classList.add("open");}
+    if(m){m.classList.add("open");m._retour=b;var c=m.querySelector(".close");if(c){c.focus();}}
   });
 });
 document.querySelectorAll(".overlay").forEach(function(o){
   o.addEventListener("click",function(e){
-    if(e.target===o||e.target.classList.contains("close")){o.classList.remove("open");}
+    if(e.target===o||e.target.classList.contains("close")){
+      o.classList.remove("open");
+      if(o._retour){o._retour.focus();o._retour=null;}   // le focus revient sur le bouton qui a ouvert la fenêtre
+    }
   });
 });
 // Touche Échap : ferme la fenêtre ouverte, y compris celles créées plus bas par le script
@@ -413,18 +445,25 @@ document.addEventListener("keydown",function(e){
 });
 
 // Jour actif dans la barre d'onglets
-var SECS=(D.jours||[]).map(function(j){return j.id;});
+var SECS=(D.jours||[]).map(function(j){return "jour-"+j.id;});
 function refreshNav(){
   var y=window.scrollY+120,cur=0;
   SECS.forEach(function(id,i){var el=document.getElementById(id);if(el&&el.offsetTop<=y)cur=i;});
-  document.querySelectorAll("nav button").forEach(function(b,i){b.classList.toggle("active",i===cur);});
+  document.querySelectorAll("nav button").forEach(function(b,i){b.classList.toggle("active",i===cur);if(i===cur){b.setAttribute("aria-current","true");}else{b.removeAttribute("aria-current");}});
 }
 window.addEventListener("scroll",refreshNav,{passive:true});
 refreshNav();
 // Le bandeau disparaît de lui-même après la date D.finBandeau
 var orgaEl=document.querySelector(".orga"),navEl2=document.querySelector("nav");
 if(orgaEl&&D.finBandeau&&Date.now()>new Date(D.finBandeau).getTime()){orgaEl.style.display="none";}
-function fixTops(){if(orgaEl&&navEl2){navEl2.style.top=(orgaEl.style.display==="none"?0:orgaEl.offsetHeight)+"px";}}
+function fixTops(){
+  if(!orgaEl||!navEl2){return;}
+  var hb=(orgaEl.style.display==="none"?0:orgaEl.offsetHeight);
+  navEl2.style.top=hb+"px";
+  // Le titre d'une journée ne doit pas passer sous le bandeau et la barre des jours
+  var marge=(hb+navEl2.offsetHeight+8)+"px";
+  document.querySelectorAll("section").forEach(function(sec){sec.style.scrollMarginTop=marge;});
+}
 window.addEventListener("resize",fixTops);fixTops();
 
 // ==========================================================================
@@ -438,7 +477,7 @@ window.addEventListener("resize",fixTops);fixTops();
   // ---- Sprites (1 caractère = 1 pixel) ----
   var PAL={H:"#D0342C",S:"#F2C29B",J:"#1F3A63",Y:"#F2A900",P:"#182B4F",B:"#14161A",
            C:"#2E86C1",W:"#CFE9FF",T:"#111318",V:"#5B6570",G:"#D8A95B",
-           M:"#C9CDD3",D:"#8A93A0",R:"#D0342C",K:"#E85C8A",L:"#FFE08A",F:"#2A1B3D",N:"#FF4FA3",Q:"#120A1E"};
+           R:"#D0342C",K:"#E85C8A",L:"#FFE08A",F:"#2A1B3D",N:"#FF4FA3",Q:"#120A1E"};
   var HERO=[
    ["..HHHHH...",".HHHHHHH..",".HSSSSSH..","..SSSSS...","..JJJJJ...",".JJYYYJJ..",".JJJJJJJ..",".JJJJJJJ..",".JYYYYYJ..","..JJJJJ...","..PPPPP...","..PP.PP...","..P...P...","..B...B...",".BB...BB.."],
    ["..HHHHH...",".HHHHHHH..",".HSSSSSH..","..SSSSS...","..JJJJJ...",".JJYYYJJ..",".JJJJJJJ..",".JJJJJJJ..",".JYYYYYJ..","..JJJJJ...","..PPPPP...",".PP...PP..",".P.....P..",".B.....B..","BB.....BB."],
@@ -578,8 +617,8 @@ window.addEventListener("resize",fixTops);fixTops();
   if(D.animations!==false&&!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)){loop();}
 
   // Camion pixel sur la timeline
-  var pin=document.getElementById("fireman-pin");
-  if(pin){pin.textContent="";pin.appendChild(makeCanvas(TRUCK,PAL,2.6));}
+  var pin=document.getElementById("camion-pin");
+  if(pin){pin.textContent="";pin.appendChild(makeCanvas(TRUCK,PAL,2.3));}
   window._truckCanvas=function(sc){return makeCanvas(TRUCK,PAL,sc);};
 })();
 
@@ -618,11 +657,11 @@ window.addEventListener("resize",fixTops);fixTops();
     return {k:k,f:f};
   }
   function updateTruck(){
-    var pin=document.getElementById("fireman-pin");
+    var pin=document.getElementById("camion-pin");
     var stops=[].slice.call(document.querySelectorAll(".stop"));
     if(!pin||!stops.length){return;}
     if(pin.parentNode!==document.body){pin.style.position="absolute";document.body.appendChild(pin);}
-    var pts=stops.map(function(st){var r=st.getBoundingClientRect();return {top:r.top+window.scrollY+10,left:r.left+window.scrollX-54};});
+    var pts=stops.map(function(st){var r=st.getBoundingClientRect();return {top:r.top+window.scrollY+10,left:Math.max(0,r.left+window.scrollX-48)};});
     var top=pts[0].top,left=pts[0].left,last=pts[pts.length-1];
     if(horaireActif()){
       var n=Math.min(temps.length,pts.length),ph=positionHoraire(n);
@@ -657,7 +696,7 @@ window.addEventListener("resize",fixTops);fixTops();
   if(mode!=="lecture"&&enCours){
     setTimeout(function(){
       var stops=document.querySelectorAll(".stop"),ph=positionHoraire(Math.min(temps.length,stops.length));
-      if(stops[ph.k]&&ph.k>0){stops[ph.k].scrollIntoView({block:"center"});}
+      if(stops[ph.k]){stops[ph.k].scrollIntoView({block:"center"});}
     },400);
   }
 })();
@@ -689,7 +728,7 @@ window.addEventListener("resize",fixTops);fixTops();
     var past=(new Date(sp.date+"T23:59:00"+FUSEAU)).getTime()<(Date.now()-2*86400000);
     var base=past?"https://archive-api.open-meteo.com/v1/archive":"https://api.open-meteo.com/v1/forecast";
     var daily=past?"weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max":"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max";
-    fetch(base+"?latitude="+sp.lat+"&longitude="+sp.lon+"&daily="+daily+"&timezone=Europe%2FParis&start_date="+sp.date+"&end_date="+sp.date)
+    fetch(base+"?latitude="+sp.lat+"&longitude="+sp.lon+"&daily="+daily+"&timezone=auto&start_date="+sp.date+"&end_date="+sp.date)
     .then(function(r){if(!r.ok){throw new Error("hs");}return r.json();})
     .then(function(d){
       if(!d.daily||d.daily.weather_code[0]===null||d.daily.weather_code[0]===undefined){throw new Error("vide");}
@@ -716,7 +755,7 @@ window.addEventListener("resize",fixTops);fixTops();
 // Souvenirs : images de démonstration (liste D.photos) + photos et vidéos déposées par le visiteur.
 // Chaque souvenir est rattaché à l'identifiant de son étape (champ « id » dans donnees.js).
 // Les dépôts restent dans le navigateur du visiteur (IndexedDB) : rien n'est envoyé sur un serveur.
-// Pour un vrai partage entre participants, remplacer les fonctions dbAll / dbAdd / dbDel (voir le README).
+// Pour un partage entre participants, un adaptateur window.ROADBOOK_STOCKAGE remplace ce stockage (voir docs/souvenirs.md).
 (function(){
   var DB_NAME=NS+"souvenirs",STORE="medias",HIDE_KEY=NS+"masquees";
   var db=null,urls={};
@@ -750,7 +789,8 @@ window.addEventListener("resize",fixTops);fixTops();
   // Stockage partagé facultatif : si un adaptateur est chargé avant ce script (window.ROADBOOK_STOCKAGE),
   // il remplace le stockage du navigateur. Voir docs/souvenirs.md et exemples/stockage-supabase.js.
   var ext=window.ROADBOOK_STOCKAGE||null,partage=!!ext;
-  var avecVideos=!ext||ext.videos!==false;
+  var avecVideos=!ext||ext.videos!==false,refusSignale=false;
+  function raison(e,defaut){return (partage&&e&&e.message)?defaut.replace(/( : .*|\.)$/,"")+" : "+e.message+".":defaut;}
   function dbAll(){return ext?ext.lister():req("readonly",function(s){return s.getAll();});}
   function dbAdd(rec){return ext?ext.ajouter(rec):req("readwrite",function(s){return s.add(rec);});}
   function dbDel(id){return ext?ext.supprimer(id):req("readwrite",function(s){return s.delete(id);});}
@@ -803,7 +843,10 @@ window.addEventListener("resize",fixTops);fixTops();
       Object.keys(urls).forEach(function(k){if(!vus[k]){URL.revokeObjectURL(urls[k]);delete urls[k];}});
       merge();render();
       if(galOpen&&lastIdxs){openGal(lastIdxs,true);}
-    }).catch(function(){});
+    }).catch(function(e){
+      // Stockage partagé : un refus est signalé une seule fois, la page reste utilisable avec les images de démonstration
+      if(partage&&!refusSignale){refusSignale=true;alert("Les souvenirs partagés ne sont pas affichés : "+((e&&e.message)||"service injoignable")+".");}
+    });
   }
   function shrink(file,cb){
     var r=new FileReader();
@@ -880,7 +923,7 @@ window.addEventListener("resize",fixTops);fixTops();
         busy(true);
         dbAdd({etape:idx,data:d,t:quand,vid:false})
           .then(loadLocal)
-          .catch(function(){alert(KO);})
+          .catch(function(e){alert(raison(e,KO));})
           .then(function(){busy(false);});
       });
     });
@@ -892,7 +935,7 @@ window.addEventListener("resize",fixTops);fixTops();
     busy(true);
     dbAdd({etape:idx,data:f,t:takenAt(f),vid:true,ext:ext,msg:!!msg,auteur:auteur||""})
       .then(loadLocal)
-      .catch(function(){alert(KO);})
+      .catch(function(e){alert(raison(e,KO));})
       .then(function(){busy(false);});
   }
   var inpCam=document.createElement("input");inpCam.type="file";inpCam.accept="image/*";inpCam.setAttribute("capture","environment");inpCam.style.display="none";
@@ -1015,7 +1058,7 @@ window.addEventListener("resize",fixTops);fixTops();
         document.body.appendChild(a);a.click();a.remove();
         setTimeout(function(){URL.revokeObjectURL(url);},4000);
       }
-    }).catch(function(){});
+    }).catch(function(){alert("Enregistrement impossible. Si la page est ouverte directement depuis un fichier, passez par un serveur local (voir le README).");});
   });
   document.getElementById("gdel").addEventListener("click",function(){
     if(!slides.length){return;}
@@ -1023,11 +1066,17 @@ window.addEventListener("resize",fixTops);fixTops();
     if(ph.local){
       var ou=partage?"pour tout le groupe":"de ce navigateur";
       if(!confirm(ph.vid?"Supprimer cette vidéo "+ou+" ?":"Supprimer cette photo "+ou+" ?")){return;}
-      dbDel(ph.key).then(loadLocal).catch(function(){alert("Suppression impossible.");});
+      dbDel(ph.key).then(loadLocal).catch(function(e){alert(raison(e,"Suppression impossible."));});
     }else{
       if(!confirm("Masquer cette image de démonstration dans ce navigateur ?")){return;}
       hidden[ph.id]=true;saveHidden();merge();render();openGal(lastIdxs,true);
     }
+  });
+  // Flèches du clavier dans la galerie
+  document.addEventListener("keydown",function(e){
+    if(!gal.classList.contains("open")){return;}
+    if(e.key==="ArrowLeft"&&gi>0){gi--;showSlide();}
+    if(e.key==="ArrowRight"&&gi<slides.length-1){gi++;showSlide();}
   });
   (function(){
     var x0=null;
@@ -1115,7 +1164,11 @@ window.addEventListener("resize",fixTops);fixTops();
 })();
 
 // Accessibilité : rôle de dialogue pour toutes les fenêtres, y compris celles créées par le script
-document.querySelectorAll(".overlay .modal").forEach(function(m){m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");});
+document.querySelectorAll(".overlay .modal").forEach(function(m){
+  m.setAttribute("role","dialog");m.setAttribute("aria-modal","true");
+  var t=m.querySelector("h3,h2,#gcap");
+  m.setAttribute("aria-label",(t&&t.textContent.trim())||"Fenêtre");
+});
 </script>
 
 </body>

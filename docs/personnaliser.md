@@ -41,7 +41,7 @@ La météo se met à jour toute seule, à chaque ouverture de la page :
 
 | Moment | Ce qui s'affiche |
 |---|---|
-| Plus de 10 jours environ avant la date | Un soleil animé et la mention « dispo ~10 j avant », pour signaler l'emplacement |
+| Plus de 10 jours environ avant la date, ou si le service météo ne répond pas | Un soleil animé et la mention « dispo ~10 j avant », pour signaler l'emplacement |
 | Dans les jours qui précèdent | Les prévisions : pictogramme, températures minimale et maximale, risque de pluie, vent |
 | Après la date | Le temps qu'il a réellement fait, avec la pluie en millimètres. Le pictogramme se fige |
 
@@ -51,7 +51,7 @@ Pour l'adapter :
 - **Retirer une carte** : supprimez le champ `meteo` de la journée.
 - **Retirer toute la météo** : supprimez le champ `meteo` de toutes les journées. La page ne contacte alors plus le service météo.
 
-Les données viennent de l'API ouverte [Open-Meteo](https://open-meteo.com/), qui ne demande ni compte ni clé.
+Les données viennent de l'API ouverte [Open-Meteo](https://open-meteo.com/), qui ne demande ni compte ni clé. La journée météo est calculée dans le fuseau horaire du lieu, déduit de ses coordonnées.
 
 ## Le thème
 

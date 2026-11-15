@@ -11,8 +11,12 @@
      Les photos sont rattachées à cet identifiant : ne le changez plus une
      fois que des photos ont été déposées.
    - Une ligne { trajet: "..." } entre deux étapes affiche un temps de route.
-   - Les champs facultatifs peuvent être supprimés (duree, alerte, reserve,
-     fenetres, fiche, itineraire, type).
+   - Les champs facultatifs peuvent être supprimés (texte, duree, type, alerte,
+     reserve, prix, fenetres, fiche, itineraire, surprise).
+   - Cet en-tête décrit les réglages généraux et les champs d'une étape.
+     Toutes les autres rubriques sont décrites dans docs/donnees.md.
+   - Pour vérifier le fichier après une modification, ouvrez la page en
+     ajoutant ?verifier à la fin de son adresse.
 
    Champs d'une étape
      id          identifiant unique
@@ -301,7 +305,7 @@ window.ROADBOOK = {
         { id: "check-out", heure: "10:45", titre: "Check-out — avant 11h", texte: "Règle du gîte : départ avant 11h00. Clés rendues, coffres chargés." },
         { trajet: "🚗 ~25 min" },
         {
-          id: "soufflerie",
+          id: "surprise-dimanche",
           heure: "11:15",
           duree: "~1h45",
           type: "cle",
@@ -698,7 +702,7 @@ window.ROADBOOK = {
     { id: 12, etape: "canyoning", date: "2026-06-13T14:30:00+02:00", fichier: "photos/demo-12.jpg" },
     { id: 13, etape: "canyoning", date: "2026-06-13T15:45:00+02:00", fichier: "photos/demo-13.jpg" },
     { id: 14, etape: "plancha", date: "2026-06-13T20:40:00+02:00", fichier: "photos/demo-14.jpg" },
-    { id: 15, etape: "soufflerie", date: "2026-06-14T12:05:00+02:00", fichier: "photos/demo-15.jpg" },
+    { id: 15, etape: "surprise-dimanche", date: "2026-06-14T12:05:00+02:00", fichier: "photos/demo-15.jpg" },
     { id: 16, etape: "pique-nique", date: "2026-06-14T13:30:00+02:00", fichier: "photos/demo-16.jpg" },
     { id: 17, etape: "arrivee", date: "2026-06-14T20:00:00+02:00", fichier: "photos/demo-17.jpg" }
   ]

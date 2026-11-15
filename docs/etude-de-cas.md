@@ -4,7 +4,7 @@ Cette page présente le besoin auquel répond le modèle, ses publics, les choix
 
 ## Le besoin
 
-Un week-end surprise de 3 jours pour 5 personnes cumule beaucoup d'informations : 26 étapes, environ 1 300 km de route, 7 réservations chez des prestataires différents, des participants qui arrivent et repartent à des moments différents, et un budget à répartir alors que tout est offert à l'invité d'honneur.
+Un week-end surprise de 3 jours pour 5 personnes cumule beaucoup d'informations : 26 étapes, environ 1 300 km de route, 6 réservations chez des prestataires différents, des participants qui arrivent et repartent à des moments différents, et un budget à répartir alors que tout est offert à l'invité d'honneur.
 
 Ces informations se dispersent vite entre une messagerie de groupe, des courriels de confirmation, une application de cartes et un outil de partage de frais. La question « on part à quelle heure et on va où ? » revient alors sans cesse, et elle retombe toujours sur la même personne.
 
@@ -28,7 +28,7 @@ Le deuxième moment est le plus contraignant, et c'est pour lui que la page est 
 
 **Le contenu séparé du code.** Tout ce qui change d'un week-end à l'autre est regroupé dans `donnees.js`. Une correction d'horaire se fait à un seul endroit, et une personne qui ne programme pas peut adapter le modèle.
 
-**Le téléphone d'abord.** La page est optimisée pour un usage sur smartphone pendant le week-end. La mise en page tient sur un écran étroit, les boutons sont larges, et le bandeau comme la barre des jours restent visibles en permanence. L'onglet du jour en cours passe en jaune.
+**Le téléphone d'abord.** La page est optimisée pour un usage sur smartphone pendant le week-end. La mise en page tient sur un écran étroit, les boutons sont larges, et le bandeau comme la barre des jours restent visibles en permanence. L'onglet de la journée affichée passe en jaune.
 
 **La page s'ouvre là où en est le groupe.** Pendant le week-end, le camion suit l'heure du programme : il est sur l'étape à l'heure dite, et entre deux étapes pendant le trajet. La page se place d'elle-même sur l'étape en cours.
 

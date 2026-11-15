@@ -17,7 +17,7 @@ Une étape peut être masquée tant qu'un code n'a pas été saisi. La page affi
 
 ```js
 {
-  id: "soufflerie",
+  id: "surprise-dimanche",
   heure: "11:15",
   titre: "Soufflerie AéroTube — chute libre indoor",
   texte: "Deux vols de chute libre indoor chacun.",
@@ -37,6 +37,7 @@ Dans la démonstration, l'étape du dimanche à 11:15 est une surprise. Son code
 - Le code est mémorisé dans le navigateur de la personne qui l'a saisi. Les autres visiteurs continuent de voir la couverture.
 - En version souvenir (`souvenir: true`), les étapes surprises sont dévoilées pour tout le monde.
 - Pensez au reste de la page : la liste à faire, le budget, les infos pratiques et le titre de la journée ne doivent pas nommer l'activité. La démonstration parle d'« activité surprise du dimanche ».
+- Donnez à l'étape un identifiant neutre, comme `surprise-dimanche` : il est lisible dans le code de la page.
 - C'est un cache, pas un coffre-fort. Le contenu réel et le code sont écrits dans `donnees.js`, et une personne curieuse qui ouvre ce fichier peut les lire.
 
 ## Les messages vidéo
@@ -49,7 +50,7 @@ options: { messagesVideo: true, codeAccesPhotos: false, codeSuppression: false }
 
 Les messages sont rangés à part des photos : ils n'apparaissent pas dans la rétrospective, mais ils sont inclus dans le téléchargement en zip.
 
-Cette option n'a d'intérêt qu'avec un stockage partagé. Sans lui, un message reste dans le navigateur de la personne qui l'a enregistré.
+Cette option n'a d'intérêt qu'avec un stockage partagé. Sans lui, un message reste dans le navigateur de la personne qui l'a enregistré. Avec le branchement Supabase fourni, elle demande d'avoir activé les vidéos, comme décrit dans [Dépôt de photos](souvenirs.md).
 
 ## Les codes du stockage partagé
 
@@ -64,7 +65,7 @@ Deux protections peuvent être ajoutées, ensemble ou séparément.
 
 Chaque protection s'active en 2 temps :
 
-1. **Dans la base** : à la fin de `exemples/supabase.sql`, la partie 4 contient une ligne par code. Remplacez la valeur et exécutez la ligne dans l'éditeur SQL.
+1. **Dans la base** : à la fin de `exemples/supabase.sql`, la partie 3 contient une ligne par code. Remplacez la valeur et exécutez la ligne dans l'éditeur SQL.
 2. **Dans `donnees.js`** : passez l'option correspondante à `true`, pour que la page demande le code.
 
 ```js
@@ -76,7 +77,8 @@ Le code lui-même n'est jamais écrit dans la page. Il est vérifié par la base
 À savoir :
 
 - Si un code de suppression est réglé, le code d'accès ne suffit pas pour supprimer.
-- Les codes protègent la liste des souvenirs et les photos. Une vidéo reste accessible à qui connaît l'adresse exacte de son fichier, qui est longue et non devinable.
+- Les codes protègent la liste des souvenirs et les photos. Ils ne protègent pas l'espace de fichiers des vidéos : si les vidéos sont activées, toute personne qui a l'adresse de la page peut y déposer un fichier, et une vidéo reste lisible par qui connaît son adresse exacte.
+- Si un code est réglé dans la base alors que l'option est restée à `false` dans `donnees.js`, la page affiche « code refusé ou manquant ».
 - Ces codes sont une barrière simple, partagée par tout un groupe. Ils ne remplacent pas des comptes individuels.
 
 ---
